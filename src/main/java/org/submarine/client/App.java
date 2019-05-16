@@ -1,5 +1,8 @@
 package org.submarine.client;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,7 +18,13 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.submarine.client.bpmn.TDefinitions;
+import org.apache.tools.ant.filters.StringInputStream;
+import org.submarine.client.eclipse.bpmn2.Activity;
+import org.submarine.client.eclipse.bpmn2.Bpmn2Factory;
+import org.submarine.client.eclipse.bpmn2.DocumentRoot;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.submarine.shared.FieldVerifier;
 
 /**
@@ -44,9 +53,14 @@ public class App implements EntryPoint {
         final TextArea nameField = new TextArea();
         nameField.setText("GWT User");
 
-        RootBeanParserFactory p = GWT.create(RootBeanParserFactory.class);
-        TDefinitions bean = p.create().parse("<Definitions />");
-        nameField.setText(bean.toString());
+        Activity activity = Bpmn2Factory.eINSTANCE.createActivity();
+
+//        EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
+//        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+//        packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
+
+
+        nameField.setText(activity.toString());
 
         final Label errorLabel = new Label();
 

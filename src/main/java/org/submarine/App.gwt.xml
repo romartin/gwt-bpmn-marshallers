@@ -18,9 +18,21 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-  <inherits name='com.peterfranza.gwt.jaxb.JAXB'/>
+  <inherits name='org.eclipse.emf.ecore.Ecore'/>
 
-  <super-source path="compat" />
+  <source path="org.eclipse.bpmn2"/>
+  <source path="org.eclipse.bpmn2.di"/>
+  <source path="org.eclipse.bpmn2.di.impl"/>
+  <source path="org.eclipse.bpmn2.di.util"/>
+  <source path="org.eclipse.bpmn2.impl"/>
+  <source path="org.eclipse.bpmn2.util"/>
+  <source path="org.eclipse.dd.dc"/>
+  <source path="org.eclipse.dd.dc.impl"/>
+  <source path="org.eclipse.dd.dc.util"/>
+  <source path="org.eclipse.dd.di"/>
+  <source path="org.eclipse.dd.di.impl"/>
+  <source path="org.eclipse.dd.di.util"/>
+
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.submarine.client.App'/>
