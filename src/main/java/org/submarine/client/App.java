@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import org.submarine.client.bpmn.TDefinitions;
 import org.submarine.shared.FieldVerifier;
 
 /**
@@ -44,9 +43,9 @@ public class App implements EntryPoint {
         final TextArea nameField = new TextArea();
         nameField.setText("GWT User");
 
-        RootBeanParserFactory p = GWT.create(RootBeanParserFactory.class);
-        TDefinitions bean = p.create().parse("<Definitions />");
-        nameField.setText(bean.toString());
+//        RootBeanParserFactory p = GWT.create(RootBeanParserFactory.class);
+//        TDefinitions bean = p.create().parse("<Definitions />");
+//        nameField.setText(bean.toString());
 
         final Label errorLabel = new Label();
 
