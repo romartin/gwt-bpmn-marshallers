@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import org.submarine.client.model.TActivity;
 import org.submarine.shared.FieldVerifier;
 
 /**
@@ -42,10 +43,12 @@ public class App implements EntryPoint {
         final Button sendButton = new Button("Send");
         final TextArea nameField = new TextArea();
         nameField.setText("GWT User");
+        Bpmn2Factory factory = GWT.create(Bpmn2Factory.class);
+        TActivity activity = factory.activity().as();
 
 //        RootBeanParserFactory p = GWT.create(RootBeanParserFactory.class);
 //        TDefinitions bean = p.create().parse("<Definitions />");
-//        nameField.setText(bean.toString());
+        nameField.setText(activity.toString());
 
         final Label errorLabel = new Label();
 
