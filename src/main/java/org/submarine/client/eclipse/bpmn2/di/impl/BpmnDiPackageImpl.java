@@ -185,7 +185,7 @@ public class BpmnDiPackageImpl extends EPackageImpl implements BpmnDiPackage {
 				: DcPackage.eINSTANCE);
 
 		// Load packages
-		theBpmn2Package.loadPackage();
+		theBpmn2Package.createPackageContents();
 
 		// Create package meta-data objects
 		theBpmnDiPackage.createPackageContents();
@@ -198,7 +198,7 @@ public class BpmnDiPackageImpl extends EPackageImpl implements BpmnDiPackage {
 		theDcPackage.initializePackageContents();
 
 		// Fix loaded packages
-		theBpmn2Package.fixPackageContents();
+//		theBpmn2Package.fixPackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theBpmnDiPackage.freeze();

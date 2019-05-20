@@ -149,7 +149,7 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
 				: DiPackage.eINSTANCE);
 
 		// Load packages
-		theBpmn2Package.loadPackage();
+		theBpmn2Package.createPackageContents();
 
 		// Create package meta-data objects
 		theDcPackage.createPackageContents();
@@ -162,7 +162,7 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
 		theDiPackage.initializePackageContents();
 
 		// Fix loaded packages
-		theBpmn2Package.fixPackageContents();
+//		theBpmn2Package.fixPackageContents();
 
 		// Register package validator
 		EValidator.Registry.INSTANCE.put(theDcPackage, new EValidator.Descriptor() {

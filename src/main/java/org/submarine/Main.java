@@ -1,223 +1,59 @@
-package org.submarine.client;
+package org.submarine;
 
-import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NamedNodeMap;
-import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EClassImpl;
-import org.eclipse.emf.ecore.util.ExtendedMetaData;
-import org.submarine.client.eclipse.bpmn2.Activity;
 import org.submarine.client.eclipse.bpmn2.Bpmn2Factory;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Package;
-import org.submarine.shared.FieldVerifier;
+import org.submarine.client.eclipse.dd.di.impl.DiPackageImpl;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
-public class App implements EntryPoint {
+public class Main {
 
-    /**
-     * The message displayed to the user when the server cannot be reached or
-     * returns an error.
-     */
-    private static final String SERVER_ERROR = "An error occurred while "
-            + "attempting to contact the server. Please check your network "
-            + "connection and try again.";
+    public static void main(String[] args) {
 
-    /**
-     * Create a remote service proxy to talk to the server-side Greeting service.
-     */
-    private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
 
-    /**
-     * This is the entry point method.
-     */
-    public void onModuleLoad() {
-        final Button sendButton = new Button("Send");
-        final TextArea nameField = new TextArea();
-        nameField.setText("GWT User");
-        nameField.setCharacterWidth(90);
-        nameField.setVisibleLines(100);
+//        BpmnDiPackageImpl.init();
+        DiPackageImpl.init();
+//        Bpmn2PackageImpl.init();
+//        DcPackageImpl.init();
 
-        EPackage.Registry ensure = EPackage.Registry.INSTANCE;
         Bpmn2Factory eINSTANCE = Bpmn2Factory.eINSTANCE;
 //        Activity activity = eINSTANCE.createActivity();
 
-        Bpmn2Package pkg = Bpmn2Package.eINSTANCE;
-        Bpmn2Factory factory = Bpmn2Factory.eINSTANCE;
+//        Bpmn2Package eFactory = Bpmn2Package.eINSTANCE;
+//        Bpmn2Factory factory = Bpmn2Factory.eINSTANCE;
 
-        Document doc = XMLParser.parse(TEXT);
-        Element element = doc.getDocumentElement();
+//        Document doc = XMLParser.parse(TEXT);
+//        Element element = doc.getDocumentElement();
         String result = "";
-        NodeList childNodes = element.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node node = childNodes.item(i);
-            switch (node.getNodeType()) {
-                case Node.ELEMENT_NODE:
-                    NamedNodeMap attributes = node.getAttributes();
-                    for (int j = 0; j < attributes.getLength(); j++) {
-                        Node attr = attributes.item(i);
-                    }
-                    String namespaceURI = node.getNamespaceURI();
-                    String nodeName = node.getNodeName();
-                    String className = nodeName.split(":")[1];
-                    className = className.substring(0, 1).toUpperCase() + className.substring(1);
-                    EClassifier eClassifier = factory.getEPackage().getEClassifier(className);
-                    if (eClassifier == null) {
-                        result += "ignored: "+className+"\n";
-                        continue;
-                    }
+//        NodeList childNodes = element.getChildNodes();
+//        for (int i = 0; i < childNodes.getLength(); i++) {
+//            Node node = childNodes.item(i);
+//            switch (node.getNodeType()) {
+//                case Node.ELEMENT_NODE:
+//                    NamedNodeMap attributes = node.getAttributes();
+//                    for (int j = 0; j < attributes.getLength(); j++) {
+//                        Node attr = attributes.item(i);
+//                    }
+//                    String namespaceURI = node.getNamespaceURI();
+//                    EFactory eFactory = EPackage.Registry.INSTANCE.getEFactory(namespaceURI);
+//                    String nodeName = node.getNodeName();
+                    EClassifier eClassifier = eINSTANCE.getEPackage().getEClassifier("ItemDefinition");
+                    EObject eObject = eINSTANCE.create((EClass) eClassifier);
+                    result += eObject.toString();
 
-
-                    EObject eObject = factory.create((EClass) eClassifier);
-                    result += eObject.toString() + "\n";//eClassifier.toString();
-
-                    break;
-                default:
-                    result += "";
-            }
-        }
-
-//            if (node instanceof Element) {
-//                Element e = (Element) node;
-//                result += e.getTagName() + "\n";
+//                    break;
+//                default:
+//                    result += "";
 //            }
+
+        System.out.println(result);
 //        }
-
-//        EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
-//        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-//        packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
-
-
-        nameField.setText("hello"+result);
-
-        final Label errorLabel = new Label();
-
-        // We can add style names to widgets
-        sendButton.addStyleName("sendButton");
-
-        // Add the nameField and sendButton to the RootPanel
-        // Use RootPanel.get() to get the entire body element
-        RootPanel.get("nameFieldContainer").add(nameField);
-        RootPanel.get("sendButtonContainer").add(sendButton);
-        RootPanel.get("errorLabelContainer").add(errorLabel);
-
-        // Focus the cursor on the name field when the app loads
-        nameField.setFocus(true);
-        nameField.selectAll();
-
-        // Create the popup dialog box
-        final DialogBox dialogBox = new DialogBox();
-        dialogBox.setText("Remote Procedure Call");
-        dialogBox.setAnimationEnabled(true);
-        final Button closeButton = new Button("Close");
-        // We can set the id of a widget by accessing its Element
-        closeButton.getElement().setId("closeButton");
-        final Label textToServerLabel = new Label();
-        final HTML serverResponseLabel = new HTML();
-        VerticalPanel dialogVPanel = new VerticalPanel();
-        dialogVPanel.addStyleName("dialogVPanel");
-        dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-        dialogVPanel.add(textToServerLabel);
-        dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-        dialogVPanel.add(serverResponseLabel);
-        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-        dialogVPanel.add(closeButton);
-        dialogBox.setWidget(dialogVPanel);
-
-        // Add a handler to close the DialogBox
-        closeButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                dialogBox.hide();
-                sendButton.setEnabled(true);
-                sendButton.setFocus(true);
-            }
-        });
-
-        // Create a handler for the sendButton and nameField
-        class MyHandler implements ClickHandler,
-                                   KeyUpHandler {
-
-            /**
-             * Fired when the user clicks on the sendButton.
-             */
-            public void onClick(ClickEvent event) {
-                sendNameToServer();
-            }
-
-            /**
-             * Fired when the user types in the nameField.
-             */
-            public void onKeyUp(KeyUpEvent event) {
-                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                    sendNameToServer();
-                }
-            }
-
-            /**
-             * Send the name from the nameField to the server and wait for a response.
-             */
-            private void sendNameToServer() {
-                // First, we validate the input.
-                errorLabel.setText("");
-                String textToServer = nameField.getText();
-                if (!FieldVerifier.isValidName(textToServer)) {
-                    errorLabel.setText("Please enter at least four characters");
-                    return;
-                }
-
-                // Then, we send the input to the server.
-                sendButton.setEnabled(false);
-                textToServerLabel.setText(textToServer);
-                serverResponseLabel.setText("");
-                greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-                    public void onFailure(Throwable caught) {
-                        // Show the RPC error message to the user
-                        dialogBox.setText("Remote Procedure Call - Failure");
-                        serverResponseLabel.addStyleName("serverResponseLabelError");
-                        serverResponseLabel.setHTML(SERVER_ERROR);
-                        dialogBox.center();
-                        closeButton.setFocus(true);
-                    }
-
-                    public void onSuccess(String result) {
-                        dialogBox.setText("Remote Procedure Call");
-                        serverResponseLabel.removeStyleName("serverResponseLabelError");
-                        serverResponseLabel.setHTML(result);
-                        dialogBox.center();
-                        closeButton.setFocus(true);
-                    }
-                });
-            }
-        }
-
-        // Add a handler to send the name to the server
-        MyHandler handler = new MyHandler();
-        sendButton.addClickHandler(handler);
-        nameField.addKeyUpHandler(handler);
     }
+
 
 
     private static final String TEXT =
@@ -471,63 +307,3 @@ public class App implements EntryPoint {
                     "  </bpmn2:relationship>\n" +
                     "</bpmn2:definitions>";
 }
-
-/*
-        if (namespaceAware)
-        {
-          for (int i = 0, length = attributes.getLength(); i < length; i++)
-          {
-            Node attr = attributes.item(i);
-            String namespaceURI = attr.getNamespaceURI();
-            if (ExtendedMetaData.XMLNS_URI.equals(namespaceURI))
-            {
-              handler.startPrefixMapping(attr.getLocalName(), attr.getNodeValue());
-              if (filteredAttributes == null)
-              {
-                filteredAttributes = new AttributesImpl();
-                for (int j = 0; j < i; ++j)
-                {
-                  attr = attributes.item(j);
-                  namespaceURI = attr.getNamespaceURI();
-                  if (namespaceURI == null)
-                  {
-                    namespaceURI = "";
-                  }
-                  filteredAttributes.addAttribute(namespaceURI, attr.getLocalName(), attr.getNodeName(), "CDATA", attr.getNodeValue());
-                }
-              }
-            }
-            else if (filteredAttributes != null)
-            {
-              if (namespaceURI == null)
-              {
-                namespaceURI = "";
-              }
-              filteredAttributes.addAttribute(namespaceURI, attr.getLocalName(), attr.getNodeName(), "CDATA", attr.getNodeValue());
-            }
-          }
-        }
-        if (filteredAttributes == null)
-        {
-          attributesProxy.setAttributes(attributes);
-        }
-        String namespaceURI = node.getNamespaceURI();
-        if (namespaceURI == null)
-        {
-          namespaceURI = "";
-        }
-        String localName = node.getLocalName();
-        String qname = node.getNodeName();
-
-        handler.startElement(namespaceURI, localName, qname, filteredAttributes == null ? attributesProxy: filteredAttributes);
-
-        Node child = node.getFirstChild();
-        while (child != null)
-        {
-          traverse(child, attributesProxy, handler, lexicalHandler);
-          child = child.getNextSibling();
-        }
-        handler.endElement(namespaceURI, localName, qname);
-        break;
-}
- */
