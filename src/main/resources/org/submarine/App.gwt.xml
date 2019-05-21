@@ -43,6 +43,6 @@
   <source path='client'/>
   <source path='shared'/>
 
-  <!-- allow Super Dev Mode -->
-  <add-linker name="xsiframe"/>
+<!--  &lt;!&ndash; allow Super Dev Mode &ndash;&gt;-->
+<!--  <add-linker name="xsiframe"/>-->
 </module>
