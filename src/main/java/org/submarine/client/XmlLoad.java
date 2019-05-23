@@ -81,7 +81,7 @@ public class XmlLoad {
                         break;
                     case Node.TEXT_NODE:
                         if (lastNode != null) {
-                            lastNode.eContents().add;
+//                            lastNode.eContents().add;
                         }
                         break;
                     case Node.CDATA_SECTION_NODE:
