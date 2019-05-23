@@ -1,59 +1,25 @@
-package org.submarine;
+package org.submarine.client;
 
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.google.gwt.junit.client.GWTTestCase;
 import org.eclipse.emf.ecore.EObject;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Factory;
-import org.submarine.client.eclipse.dd.di.impl.DiPackageImpl;
+import org.junit.Test;
 
-public class Main {
+public class XmlTest extends GWTTestCase {
 
-    public static void main(String[] args) {
-
-
-//        BpmnDiPackageImpl.init();
-        DiPackageImpl.init();
-//        Bpmn2PackageImpl.init();
-//        DcPackageImpl.init();
-
-        Bpmn2Factory eINSTANCE = Bpmn2Factory.eINSTANCE;
-//        Activity activity = eINSTANCE.createActivity();
-
-//        Bpmn2Package eFactory = Bpmn2Package.eINSTANCE;
-//        Bpmn2Factory factory = Bpmn2Factory.eINSTANCE;
-
-//        Document doc = XMLParser.parse(TEXT);
-//        Element element = doc.getDocumentElement();
-        String result = "";
-//        NodeList childNodes = element.getChildNodes();
-//        for (int i = 0; i < childNodes.getLength(); i++) {
-//            Node node = childNodes.item(i);
-//            switch (node.getNodeType()) {
-//                case Node.ELEMENT_NODE:
-//                    NamedNodeMap attributes = node.getAttributes();
-//                    for (int j = 0; j < attributes.getLength(); j++) {
-//                        Node attr = attributes.item(i);
-//                    }
-//                    String namespaceURI = node.getNamespaceURI();
-//                    EFactory eFactory = EPackage.Registry.INSTANCE.getEFactory(namespaceURI);
-//                    String nodeName = node.getNodeName();
-                    EClassifier eClassifier = eINSTANCE.getEPackage().getEClassifier("ItemDefinition");
-                    EObject eObject = eINSTANCE.create((EClass) eClassifier);
-                    result += eObject.toString();
-
-//                    break;
-//                default:
-//                    result += "";
-//            }
-
-        System.out.println(result);
-//        }
+    public String getModuleName() {
+        return "org.submarine.AppJUnit";
     }
 
+    @Test
+    public void testLoadText() {
+        XmlLoad xmlLoad = new XmlLoad();
+        List<EObject> parse = xmlLoad.parse(TEXT);
+        assertEquals("", parse.stream().map(EObject::toString).collect(Collectors.joining("\n")));
+        assertEquals("", xmlLoad.errors.stream().collect(Collectors.joining("\n")));
+    }
 
 
     private static final String TEXT =

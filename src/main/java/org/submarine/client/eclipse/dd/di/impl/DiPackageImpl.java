@@ -218,6 +218,7 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
 		theDcPackage.createPackageContents();
 
 		// Initialize created meta-data
+		theBpmn2Package.createPackageContents();
 		theDiPackage.initializePackageContents();
 		theBpmnDiPackage.initializePackageContents();
 		theDcPackage.initializePackageContents();

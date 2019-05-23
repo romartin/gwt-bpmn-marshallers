@@ -1,5 +1,8 @@
 package org.submarine.client;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -7,7 +10,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -16,22 +18,8 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Element;
-import com.google.gwt.xml.client.NamedNodeMap;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.NodeList;
 import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.impl.EClassImpl;
-import org.eclipse.emf.ecore.util.ExtendedMetaData;
-import org.submarine.client.eclipse.bpmn2.Activity;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Factory;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Package;
-import org.submarine.shared.FieldVerifier;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -47,71 +35,16 @@ public class App implements EntryPoint {
             + "connection and try again.";
 
     /**
-     * Create a remote service proxy to talk to the server-side Greeting service.
-     */
-    private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-
-    /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
         final Button sendButton = new Button("Send");
-        final TextArea nameField = new TextArea();
-        nameField.setText("GWT User");
-        nameField.setCharacterWidth(90);
-        nameField.setVisibleLines(100);
-
-        EPackage.Registry ensure = EPackage.Registry.INSTANCE;
-        Bpmn2Factory eINSTANCE = Bpmn2Factory.eINSTANCE;
-//        Activity activity = eINSTANCE.createActivity();
-
-        Bpmn2Package pkg = Bpmn2Package.eINSTANCE;
-        Bpmn2Factory factory = Bpmn2Factory.eINSTANCE;
-
-        Document doc = XMLParser.parse(TEXT);
-        Element element = doc.getDocumentElement();
-        String result = "";
-        NodeList childNodes = element.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node node = childNodes.item(i);
-            switch (node.getNodeType()) {
-                case Node.ELEMENT_NODE:
-                    NamedNodeMap attributes = node.getAttributes();
-                    for (int j = 0; j < attributes.getLength(); j++) {
-                        Node attr = attributes.item(i);
-                    }
-                    String namespaceURI = node.getNamespaceURI();
-                    String nodeName = node.getNodeName();
-                    String className = nodeName.split(":")[1];
-                    className = className.substring(0, 1).toUpperCase() + className.substring(1);
-                    EClassifier eClassifier = factory.getEPackage().getEClassifier(className);
-                    if (eClassifier == null) {
-                        result += "ignored: "+className+"\n";
-                        continue;
-                    }
-
-
-                    EObject eObject = factory.create((EClass) eClassifier);
-                    result += eObject.toString() + "\n";//eClassifier.toString();
-
-                    break;
-                default:
-                    result += "";
-            }
-        }
-
-//            if (node instanceof Element) {
-//                Element e = (Element) node;
-//                result += e.getTagName() + "\n";
-//            }
-//        }
-
-//        EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
-//        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-//        packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
-
-
-        nameField.setText("hello"+result);
+        final TextArea codeField = new TextArea();
+        final Label textToServerLabel = new Label();
+        final HTML serverResponseLabel = new HTML();
+        codeField.setText(TEXT);
+        codeField.setCharacterWidth(70);
+        codeField.setVisibleLines(20);
 
         final Label errorLabel = new Label();
 
@@ -120,41 +53,43 @@ public class App implements EntryPoint {
 
         // Add the nameField and sendButton to the RootPanel
         // Use RootPanel.get() to get the entire body element
-        RootPanel.get("nameFieldContainer").add(nameField);
+        RootPanel.get("nameFieldContainer").add(codeField);
         RootPanel.get("sendButtonContainer").add(sendButton);
         RootPanel.get("errorLabelContainer").add(errorLabel);
+        RootPanel.get("outputContainer").add(textToServerLabel);
+        RootPanel.get("errorContainer").add(serverResponseLabel);
 
         // Focus the cursor on the name field when the app loads
-        nameField.setFocus(true);
-        nameField.selectAll();
-
-        // Create the popup dialog box
-        final DialogBox dialogBox = new DialogBox();
-        dialogBox.setText("Remote Procedure Call");
-        dialogBox.setAnimationEnabled(true);
-        final Button closeButton = new Button("Close");
-        // We can set the id of a widget by accessing its Element
-        closeButton.getElement().setId("closeButton");
-        final Label textToServerLabel = new Label();
-        final HTML serverResponseLabel = new HTML();
-        VerticalPanel dialogVPanel = new VerticalPanel();
-        dialogVPanel.addStyleName("dialogVPanel");
-        dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-        dialogVPanel.add(textToServerLabel);
-        dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-        dialogVPanel.add(serverResponseLabel);
-        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-        dialogVPanel.add(closeButton);
-        dialogBox.setWidget(dialogVPanel);
+        codeField.setFocus(true);
+        codeField.selectAll();
+//
+//        // Create the popup dialog box
+//        final DialogBox dialogBox = new DialogBox();
+//        dialogBox.setWidth("800");
+//
+//        dialogBox.setText("Remote Procedure Call");
+//        dialogBox.setAnimationEnabled(true);
+//        final Button closeButton = new Button("Close");
+//        // We can set the id of a widget by accessing its Element
+//        closeButton.getElement().setId("closeButton");
+//        VerticalPanel dialogVPanel = new VerticalPanel();
+//        dialogVPanel.addStyleName("dialogVPanel");
+//        dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+//        dialogVPanel.add(textToServerLabel);
+//        dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+//        dialogVPanel.add(serverResponseLabel);
+//        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+//        dialogVPanel.add(closeButton);
+//        dialogBox.setWidget(dialogVPanel);
 
         // Add a handler to close the DialogBox
-        closeButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                dialogBox.hide();
-                sendButton.setEnabled(true);
-                sendButton.setFocus(true);
-            }
-        });
+//        closeButton.addClickHandler(new ClickHandler() {
+//            public void onClick(ClickEvent event) {
+//                dialogBox.hide();
+//                sendButton.setEnabled(true);
+//                sendButton.setFocus(true);
+//            }
+//        });
 
         // Create a handler for the sendButton and nameField
         class MyHandler implements ClickHandler,
@@ -182,41 +117,28 @@ public class App implements EntryPoint {
             private void sendNameToServer() {
                 // First, we validate the input.
                 errorLabel.setText("");
-                String textToServer = nameField.getText();
-                if (!FieldVerifier.isValidName(textToServer)) {
-                    errorLabel.setText("Please enter at least four characters");
-                    return;
-                }
-
+                String textToServer = codeField.getText();
+                String text = codeField.getText();
+                XMLParser parser = GWT.create(XMLParser.class);
+                XmlLoad xmlLoad = new XmlLoad();
+                Document doc = parser.parse(text);
+                List<EObject> results = xmlLoad.load(doc);;
+                serverResponseLabel.addStyleName("serverResponseLabelError");
+//                dialogBox.center();
+//                closeButton.setFocus(true);
+//                dialogBox.setText("converter");
                 // Then, we send the input to the server.
                 sendButton.setEnabled(false);
-                textToServerLabel.setText(textToServer);
-                serverResponseLabel.setText("");
-                greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-                    public void onFailure(Throwable caught) {
-                        // Show the RPC error message to the user
-                        dialogBox.setText("Remote Procedure Call - Failure");
-                        serverResponseLabel.addStyleName("serverResponseLabelError");
-                        serverResponseLabel.setHTML(SERVER_ERROR);
-                        dialogBox.center();
-                        closeButton.setFocus(true);
-                    }
+                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
+                serverResponseLabel.setHTML(String.join("<br>", xmlLoad.errors));
 
-                    public void onSuccess(String result) {
-                        dialogBox.setText("Remote Procedure Call");
-                        serverResponseLabel.removeStyleName("serverResponseLabelError");
-                        serverResponseLabel.setHTML(result);
-                        dialogBox.center();
-                        closeButton.setFocus(true);
-                    }
-                });
             }
         }
 
         // Add a handler to send the name to the server
         MyHandler handler = new MyHandler();
         sendButton.addClickHandler(handler);
-        nameField.addKeyUpHandler(handler);
+        codeField.addKeyUpHandler(handler);
     }
 
 
