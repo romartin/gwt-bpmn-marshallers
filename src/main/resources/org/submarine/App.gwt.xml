@@ -20,7 +20,6 @@
 
   <!-- Other module inherits                                      -->
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
-  <inherits name='com.github.xose.xml.XML'/>
   <set-property name="compiler.useSourceMaps" value="true"/>
 
   <source path="org.eclipse.bpmn2"/>

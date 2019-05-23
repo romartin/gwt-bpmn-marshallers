@@ -88,11 +88,6 @@
 
 
     <dependency>
-      <groupId>com.github.xose</groupId>
-      <artifactId>gwt-xml</artifactId>
-      <version>0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
       <scope>runtime</scope>
