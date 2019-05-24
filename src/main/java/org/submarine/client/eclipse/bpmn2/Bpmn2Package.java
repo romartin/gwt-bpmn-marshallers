@@ -50,7 +50,7 @@ public interface Bpmn2Package extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.omg.org/spec/BPMN/20100524/MODEL";
+	String eNS_URI = "http://www.omg.org/spec/BPMN/20100524/MODEL-XMI";
 
 	/**
 	 * The package namespace name.

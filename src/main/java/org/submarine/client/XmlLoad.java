@@ -58,7 +58,7 @@ public class XmlLoad {
                         String nodeName = childElement.getNodeName();
                         String className = className(nodeName);
 
-                        EFactory eFactory = registry.getEFactory(namespaceURI);
+                        EFactory eFactory = registry.getEFactory(getNamespaceURI(namespaceURI));
                         EPackage ePackage = eFactory.getEPackage();
                         EClassifier eClassifier = ePackage.getEClassifier(className);
                         EClass eClass = (EClass) eClassifier;
@@ -97,6 +97,10 @@ public class XmlLoad {
 
         }
         return result;
+    }
+
+    private String getNamespaceURI(String namespaceURI) {
+        return namespaceURI + "-XMI";
     }
 
     private void addNodes(List<Node> nodes, NodeList childNodes) {

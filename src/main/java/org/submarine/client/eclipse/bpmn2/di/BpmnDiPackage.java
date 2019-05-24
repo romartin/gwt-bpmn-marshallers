@@ -52,7 +52,7 @@ public interface BpmnDiPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.omg.org/spec/BPMN/20100524/DI";
+	String eNS_URI = "http://www.omg.org/spec/BPMN/20100524/DI-XMI";
 
 	/**
 	 * The package namespace name.
