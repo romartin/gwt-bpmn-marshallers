@@ -32,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EMap;
@@ -1654,12 +1653,13 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
       xmlResource.getDefaultSaveOptions().put(XMLResource.OPTION_SCHEMA_LOCATION, Boolean.TRUE);
     }
 
-    for (StringTokenizer stringTokenizer = new StringTokenizer(schemaLocations, " "); stringTokenizer.hasMoreTokens(); )
+    String[] tokens = schemaLocations.split(" ");
+    for (int i = 0; i < tokens.length; i++)
     {
-      String key = stringTokenizer.nextToken();
-      if (stringTokenizer.hasMoreTokens())
+      String key = tokens[i];
+      if (i+1<tokens.length)
       {
-        String value = stringTokenizer.nextToken();
+        String value = tokens[++i];
         URI uri = URI.createURI(value);
         if (uriHandler != null)
         {
@@ -2728,7 +2728,8 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
    */
   protected void setValueFromId(EObject object, EReference eReference, String ids)
   {
-    StringTokenizer st = new StringTokenizer(ids);
+    String[] tokens = ids.split(" ");
+    int t = 0;
 
     boolean isFirstID = true;
     boolean mustAdd = deferIDREFResolution;
@@ -2737,9 +2738,9 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
     int size = 0;
     String qName = null;
     int position = 0;
-    while (st.hasMoreTokens())
+    while (t < tokens.length)
     {
-      String id = st.nextToken();
+      String id = tokens[t++];
       int index = id.indexOf('#', 0);
       if (index != -1)
       {

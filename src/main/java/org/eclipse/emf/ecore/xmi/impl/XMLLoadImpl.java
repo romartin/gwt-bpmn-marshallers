@@ -132,7 +132,7 @@ public class XMLLoadImpl implements XMLLoad
         {
           traverse(node, attributesProxy, handler, lexicalHandler);
         }
-        handler.endDocument();      
+        handler.endDocument();
       }
       else
       {
@@ -143,12 +143,12 @@ public class XMLLoadImpl implements XMLLoad
     {
       // ignore
     }
-    
+
     if (pool != null)
     {
       pool.releaseDefaultHandler((XMLDefaultHandler)handler, options);
     }
-    
+
     attributesProxy = null;
     handler = null;
     lexicalHandler = null;
@@ -156,16 +156,16 @@ public class XMLLoadImpl implements XMLLoad
 
     handleErrors();
   }
-  
+
   /**
    * Special case: traversing root element using namespaces in scope
    */
   protected void traverseElement(Element element, AttributesProxy attributesProxy, DefaultHandler handler, LexicalHandler lexicalHandler) throws SAXException
-  {   
+  {
     // temporary structure to hold node's attributes + namespaces in scope
     AttributesImpl attrs = new AttributesImpl();
     Set<String> prefixes = new HashSet<String>();
-    
+
     // record node's attributes
     if (element.hasAttributes())
     {
@@ -203,7 +203,7 @@ public class XMLLoadImpl implements XMLLoad
         }
       }
     }
-    
+
     // record namespaces in scope
     //
     for (Node parent = element.getParentNode();  parent != null && parent.getNodeType() != Node.DOCUMENT_NODE;  parent = parent.getParentNode())
@@ -216,7 +216,7 @@ public class XMLLoadImpl implements XMLLoad
           Node attr = attributes.item(i);
           String namespaceURI = attr.getNamespaceURI();
           if (ExtendedMetaData.XMLNS_URI.equals(namespaceURI))
-          {          
+          {
             // Include only non-duplicate namespace declarations.
             //
             String localName = getLocalName(attr);
@@ -228,7 +228,7 @@ public class XMLLoadImpl implements XMLLoad
                 handler.startPrefixMapping(localName, nodeValue);
               }
             }
-            else 
+            else
             {
               String nodeName = attr.getNodeName();
               if (attrs.getIndex(nodeName) < 0)
@@ -239,7 +239,7 @@ public class XMLLoadImpl implements XMLLoad
           }
         }
       }
-    }  
+    }
 
     // traverse element node
     String namespaceURI = element.getNamespaceURI();
@@ -248,8 +248,8 @@ public class XMLLoadImpl implements XMLLoad
       namespaceURI = "";
     }
     String localName = getLocalName(element);
-    String qname = element.getNodeName();   
-    
+    String qname = element.getNodeName();
+
     handler.startElement(namespaceURI, localName , qname, attrs);
     Node child = element.getFirstChild();
     while (child != null)

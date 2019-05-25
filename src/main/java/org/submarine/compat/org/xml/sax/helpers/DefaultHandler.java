@@ -20,52 +20,52 @@ public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandle
 //        return null;
 //    }
 
-    public void notationDecl(String name, String publicId, String systemId)  {
+    public void notationDecl(String name, String publicId, String systemId) throws SAXException {
     }
 
-    public void unparsedEntityDecl(String name, String publicId, String systemId, String notationName)  {
+    public void unparsedEntityDecl(String name, String publicId, String systemId, String notationName) throws SAXException {
     }
 
 //    public void setDocumentLocator(Locator locator) {
 //    }
 //
-    public void startDocument()  {
+    public void startDocument() throws SAXException {
     }
 
-    public void endDocument()  {
+    public void endDocument() throws SAXException {
     }
 
-    public void startPrefixMapping(String prefix, String uri)  {
+    public void startPrefixMapping(String prefix, String uri) throws SAXException {
     }
 
-    public void endPrefixMapping(String prefix)  {
+    public void endPrefixMapping(String prefix) throws SAXException {
     }
 
-    public void startElement(String uri, String localName, String qName, Attributes attributes)  {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     }
 
-    public void endElement(String uri, String localName, String qName)  {
+    public void endElement(String uri, String localName, String qName) throws SAXException {
     }
 
-    public void characters(char[] ch, int start, int length)  {
+    public void characters(char[] ch, int start, int length) throws SAXException {
     }
 
-    public void ignorableWhitespace(char[] ch, int start, int length)  {
+    public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
     }
 
-    public void processingInstruction(String target, String data)  {
+    public void processingInstruction(String target, String data) throws SAXException {
     }
 
-    public void skippedEntity(String name)  {
+    public void skippedEntity(String name) throws SAXException {
     }
 
-//    public void warning(SAXParseException e)  {
+//    public void warning(SAXParseException e) throws SAXException {
 //    }
 //
-//    public void error(SAXParseException e)  {
+//    public void error(SAXParseException e) throws SAXException {
 //    }
 //
-//    public void fatalError(SAXParseException e)  {
+//    public void fatalError(SAXParseException e) throws SAXException {
 //        throw e;
 //    }
 }

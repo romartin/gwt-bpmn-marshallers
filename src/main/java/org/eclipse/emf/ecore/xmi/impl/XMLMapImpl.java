@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
@@ -275,9 +274,10 @@ public class XMLMapImpl implements XMLResource.XMLMap
         {
           int size = result.size();
           int index = size - eReferences.size() - eAttributes.size();
-          for (StringTokenizer stringTokenizer = new StringTokenizer(featureOrder); stringTokenizer.hasMoreTokens(); ++index)
+          String[] features = featureOrder.split(" ");
+          for (int f = 0; f < featureOrder.length(); ++index, ++f)
           {
-            String featureName = stringTokenizer.nextToken();
+            String featureName = features[f];
             for (int i = index; i < size; ++i)
             {
               EStructuralFeature eStructuralFeature = result.get(i);

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import org.eclipse.emf.common.util.BasicEList;
@@ -1129,9 +1128,10 @@ public class XMLHelperImpl implements XMLHelper
           @SuppressWarnings("unchecked") InternalEList<Object> list = (InternalEList<Object>)object.eGet(feature);
           if (position == -2)
           {
-            for (StringTokenizer stringTokenizer = new StringTokenizer((String)value, " "); stringTokenizer.hasMoreTokens(); )
+            String[] tokens = ((String) value).split(" ");
+            for (int t = 0; t < tokens.length; t++)
             {
-              String token = stringTokenizer.nextToken();
+              String token = tokens[t];
               list.addUnique(createFromString(eFactory, eDataType, token));
             }
 
