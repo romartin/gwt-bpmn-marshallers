@@ -3,26 +3,23 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.xml.sax.helpers;
+package compat.org.xml.sax.helpers;
 
-import java.io.IOException;
-import org.xml.sax.Attributes;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import compat.org.xml.sax.ErrorHandler;
+import compat.org.xml.sax.SAXException;
+import compat.org.xml.sax.Attributes;
+import compat.org.xml.sax.ContentHandler;
+import compat.org.xml.sax.DTDHandler;
+import compat.org.xml.sax.EntityResolver;
 
-public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandler, ErrorHandler {
+public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandler/*,
+                                       ErrorHandler */{
     public DefaultHandler() {
     }
-
-    public InputSource resolveEntity(String publicId, String systemId) throws IOException, SAXException {
-        return null;
-    }
+//
+//    public InputSource resolveEntity(String publicId, String systemId) throws IOException, SAXException {
+//        return null;
+//    }
 
     public void notationDecl(String name, String publicId, String systemId) throws SAXException {
     }
@@ -30,9 +27,9 @@ public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandle
     public void unparsedEntityDecl(String name, String publicId, String systemId, String notationName) throws SAXException {
     }
 
-    public void setDocumentLocator(Locator locator) {
-    }
-
+//    public void setDocumentLocator(Locator locator) {
+//    }
+//
     public void startDocument() throws SAXException {
     }
 
@@ -63,13 +60,13 @@ public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandle
     public void skippedEntity(String name) throws SAXException {
     }
 
-    public void warning(SAXParseException e) throws SAXException {
-    }
-
-    public void error(SAXParseException e) throws SAXException {
-    }
-
-    public void fatalError(SAXParseException e) throws SAXException {
-        throw e;
-    }
+//    public void warning(SAXParseException e) throws SAXException {
+//    }
+//
+//    public void error(SAXParseException e) throws SAXException {
+//    }
+//
+//    public void fatalError(SAXParseException e) throws SAXException {
+//        throw e;
+//    }
 }

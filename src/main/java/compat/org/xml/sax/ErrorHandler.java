@@ -3,7 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.xml.sax;
+package compat.org.xml.sax;
+
+import org.xml.sax.SAXParseException;
 
 public interface ErrorHandler {
     void warning(SAXParseException var1) throws SAXException;

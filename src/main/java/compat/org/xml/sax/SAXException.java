@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.xml.sax;
+package compat.org.xml.sax;
 
 import java.io.IOException;
 import java.io.InvalidClassException;

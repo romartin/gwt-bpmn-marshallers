@@ -3,9 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.xml.sax.ext;
+package compat.org.xml.sax.ext;
 
-import org.xml.sax.SAXException;
+import compat.org.xml.sax.SAXException;
 
 public interface LexicalHandler {
     void startDTD(String var1, String var2, String var3) throws SAXException;

@@ -22,12 +22,6 @@
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
   <set-property name="compiler.useSourceMaps" value="true"/>
 
-  <source path="org.eclipse"/>
-  <source path="org.xml.sax"/>
-  <source path="org.xml.sax.ext"/>
-  <source path="org.xml.sax.helpers"/>
-
-
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.submarine.client.App'/>
 
@@ -35,6 +29,8 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
+  <super-source path="compat"/>
+
   <set-property name="user.agent" value="safari" />
 
 <!--  &lt;!&ndash; allow Super Dev Mode &ndash;&gt;-->

@@ -3,10 +3,12 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.xml.sax;
+package compat.org.xml.sax;
+
+import org.xml.sax.Locator;
 
 public interface ContentHandler {
-    void setDocumentLocator(Locator var1);
+//    void setDocumentLocator(Locator var1);
 
     void startDocument() throws SAXException;
 

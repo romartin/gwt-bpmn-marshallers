@@ -19,9 +19,7 @@ package org.eclipse.emf.ecore.xmi.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +45,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMLParserPoolImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 

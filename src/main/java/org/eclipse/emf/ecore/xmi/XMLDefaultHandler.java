@@ -18,12 +18,6 @@ package org.eclipse.emf.ecore.xmi;
 
 import java.util.Map;
 
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.ext.LexicalHandler;
-
 /**
  * The XML handler interface. 
  *
