@@ -23,6 +23,9 @@
   <set-property name="compiler.useSourceMaps" value="true"/>
 
   <source path="org.eclipse"/>
+  <source path="org.xml.sax"/>
+  <source path="org.xml.sax.ext"/>
+  <source path="org.xml.sax.helpers"/>
 
 
   <!-- Specify the app entry point class.                         -->

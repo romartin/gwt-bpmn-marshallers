@@ -17,12 +17,6 @@
 package org.eclipse.emf.ecore.xmi.impl;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -164,6 +158,7 @@ public class XMLSaveImpl implements XMLSave
 
   protected static final int EMPTY_ELEMENT = 1;
   protected static final int CONTENT_ELEMENT = 2;
+  private String temporaryFileName = null;
 
   public XMLSaveImpl(XMLHelper helper)
   {
@@ -218,7 +213,7 @@ public class XMLSaveImpl implements XMLSave
   }
 
 
-  protected void endSave(List<? extends EObject> contents) throws IOException
+  protected void endSave(List<? extends EObject> contents)
   {
     if (extendedMetaData != null && contents.size() >= 1)
     {
@@ -250,7 +245,7 @@ public class XMLSaveImpl implements XMLSave
       if (exception != null)
       {
         helper = null;
-        throw new Resource.IOWrappedException(exception);
+        throw new RuntimeException(exception);
       }
     }
 
@@ -343,19 +338,6 @@ public class XMLSaveImpl implements XMLSave
       if (options.get(XMLResource.OPTION_FLUSH_THRESHOLD) instanceof Integer)
       {
         flushThreshold = (Integer)options.get(XMLResource.OPTION_FLUSH_THRESHOLD);
-      }
-
-      String temporaryFileName = null;
-      if (Boolean.TRUE.equals(options.get(XMLResource.OPTION_USE_FILE_BUFFER)))
-      {
-        try
-        {
-          temporaryFileName = File.createTempFile("XMLSave", null).getPath();
-        }
-        catch (IOException exception)
-        {
-          // If we can't create a temp file then we have to ignore the option.
-        }
       }
       
       Integer lineWidth = (Integer)options.get(XMLResource.OPTION_LINE_WIDTH);

@@ -21,9 +21,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+//import javax.xml.parsers.ParserConfigurationException;
+//import javax.xml.parsers.SAXParser;
+//import javax.xml.parsers.SAXParserFactory;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
@@ -81,16 +81,6 @@ public class XMLLoadImpl implements XMLLoad
     }
   }
 
-  /**
-   * Make either a validating or non-validating parser;
-   * throw an if one could not be made.
-   */
-  protected SAXParser makeParser() throws ParserConfigurationException, SAXException
-  {
-    SAXParserFactory f = SAXParserFactory.newInstance();
-    return f.newSAXParser();
-  }
-  
   public XMLDefaultHandler createDefaultHandler()
   {
     return (XMLDefaultHandler)makeDefaultHandler();

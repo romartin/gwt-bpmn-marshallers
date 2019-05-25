@@ -28,7 +28,7 @@ import org.xml.sax.ext.LexicalHandler;
  * The XML handler interface. 
  *
  */
-public interface XMLDefaultHandler extends ContentHandler, EntityResolver, DTDHandler, ErrorHandler, LexicalHandler
+public interface XMLDefaultHandler //extends ContentHandler, EntityResolver, DTDHandler, ErrorHandler, LexicalHandler
 {
   void reset();
   void prepare(XMLResource resource, XMLHelper helper, Map<?, ?> options);
