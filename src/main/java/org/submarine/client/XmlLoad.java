@@ -43,6 +43,7 @@ public class XmlLoad {
             try {
 //                EClass c = ((EReferenceImpl) feat).getEReferenceType();
                 allElements.put(feat.getName(), feat);
+                errors.add(feat.getName());
             } catch (Exception e) {
 //                errors.add("IGNORED FEAT: " + feat);
             }
@@ -69,7 +70,7 @@ public class XmlLoad {
 //        typeMapping.put("Incoming", "SequenceFlow");
 //        typeMapping.put("Outgoing", "SequenceFlow");
 //        typeMapping.put("IoSpecification", "InputOutputSpecification");
-        return Collections.singletonList(docRoot);
+        return result;
     }
 
     List<EObject> load(Element element, EObject instance) {
@@ -89,12 +90,10 @@ public class XmlLoad {
                         String namespaceURI = childElement.getNamespaceURI();
                         String nodeName = childElement.getNodeName();
                         String localName = localName(nodeName);
-                        if (localName.equals("userTask")) {
-                            errors.add("\n\n\n\nUSER TASK !!");
-                            errors.add("\n\n\n\nCONTEXT: "+element.getTagName());
-                            errors.add(nameTypeMapping.keySet().toString());
-                        }
-                        EStructuralFeature eFeat = nameTypeMapping.getOrDefault(localName, topLevelMapping.get(localName));
+
+
+
+                        EStructuralFeature eFeat = topLevelMapping.getOrDefault(localName, nameTypeMapping.get(localName));
                         if (eFeat == null) {
                             errors.add("ignored node " + localName);
                             continue;
@@ -111,9 +110,12 @@ public class XmlLoad {
 //                        }
 //                        EClass eClass = (EClass) eClassifier;
                         if (!(eFeat instanceof EReferenceImpl)) {
+                            errors.add(eFeat.getClass().toString());
                             continue;
                         }
                         EObject eObject = eFactory.create(((EReferenceImpl)eFeat).getEReferenceType().eClass());
+                        result.add(eObject);//eClassifier.toString();
+                        errors.add("created " + eObject);
 
                         NamedNodeMap attributes = childElement.getAttributes();
                         if (attributes != null) {
@@ -123,12 +125,11 @@ public class XmlLoad {
                             }
                         }
 
-                        instance.eContents().add(eObject);
+//                        instance.eContents().add(eObject);
 
                         List<EObject> children = load(childElement, eObject);
 //                        eObject.eSet(elementClass.getEStructuralFeature(eClass.getFeatureCount()), eObject);
 
-                        result.add(eObject);//eClassifier.toString();
 
 //                        lastNode = eObject;
                         break;

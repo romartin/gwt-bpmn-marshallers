@@ -1,0 +1,32 @@
+/**
+ * <copyright>
+ *
+ * Copyright (c) 2002-2006 IBM Corporation and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *   IBM - Initial API and implementation
+ *
+ * </copyright>
+ *
+ * $Id: XMLLoad.java,v 1.7 2006/12/05 20:23:28 emerks Exp $
+ */
+package org.eclipse.emf.ecore.xmi;
+
+import java.io.IOException;
+import java.util.Map;
+
+import com.google.gwt.xml.client.Node;
+
+/**
+ * This defines the methods for the interface that XMLResourceImpl
+ * uses to load the resource.
+ */
+public interface XMLLoad
+{
+  void load(XMLResource resource, Node node, Map<?, ?> options) throws IOException;
+  XMLDefaultHandler createDefaultHandler();
+}

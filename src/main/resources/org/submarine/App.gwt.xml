@@ -22,18 +22,7 @@
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
   <set-property name="compiler.useSourceMaps" value="true"/>
 
-  <source path="org.eclipse.bpmn2"/>
-  <source path="org.eclipse.bpmn2.di"/>
-  <source path="org.eclipse.bpmn2.di.impl"/>
-  <source path="org.eclipse.bpmn2.di.util"/>
-  <source path="org.eclipse.bpmn2.impl"/>
-  <source path="org.eclipse.bpmn2.util"/>
-  <source path="org.eclipse.dd.dc"/>
-  <source path="org.eclipse.dd.dc.impl"/>
-  <source path="org.eclipse.dd.dc.util"/>
-  <source path="org.eclipse.dd.di"/>
-  <source path="org.eclipse.dd.di.impl"/>
-  <source path="org.eclipse.dd.di.util"/>
+  <source path="org.eclipse"/>
 
 
   <!-- Specify the app entry point class.                         -->

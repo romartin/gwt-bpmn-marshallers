@@ -1,5 +1,7 @@
 package org.submarine.client;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -120,17 +123,26 @@ public class App implements EntryPoint {
                 String textToServer = codeField.getText();
                 String text = codeField.getText();
                 XMLParser parser = GWT.create(XMLParser.class);
-                XmlLoad xmlLoad = new XmlLoad();
+//                XmlLoad xmlLoad = new XmlLoad();
+//                List<String> errors = xmlLoad.errors;
                 Document doc = parser.parse(text);
-                List<EObject> results = xmlLoad.load(doc);;
+//                List<EObject> results = xmlLoad.load(doc);;
+                XMLResourceImpl xmlResource = new XMLResourceImpl();
+                try {
+                    xmlResource.load(doc.getDocumentElement(), new HashMap<>());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 serverResponseLabel.addStyleName("serverResponseLabelError");
 //                dialogBox.center();
 //                closeButton.setFocus(true);
 //                dialogBox.setText("converter");
                 // Then, we send the input to the server.
                 sendButton.setEnabled(false);
-                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
-                serverResponseLabel.setHTML(String.join("<br>", xmlLoad.errors));
+//                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
+//                serverResponseLabel.setHTML(String.join("<br>", errors));
+
+                textToServerLabel.setText(xmlResource.getContents().toString());
 
             }
         }
