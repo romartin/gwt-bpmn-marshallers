@@ -3,7 +3,7 @@
 // (powered by Fernflower decompiler)
 //
 
-package compat.org.xml.sax;
+package org.submarine.compat.org.xml.sax;
 
 public interface Attributes {
     int getLength();

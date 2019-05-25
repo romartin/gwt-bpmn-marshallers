@@ -3,9 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package compat.org.xml.sax.helpers;
+package org.submarine.compat.org.xml.sax.helpers;
 
-import compat.org.xml.sax.Attributes;
+import org.submarine.compat.org.xml.sax.Attributes;
 
 public class AttributesImpl implements Attributes {
     int length;
