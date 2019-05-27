@@ -37,13 +37,12 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLDefaultHandler;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLOptions;
-import org.eclipse.emf.ecore.xmi.XMLParserPool;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecore.xml.type.XMLTypeDocumentRoot;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.Attributes;
+import org.submarine.client.compat.org.xml.sax.SAXException;
 
 /**
  * A {@link ContentHandler} content handler implementation for dealing with XML content.
@@ -74,7 +73,7 @@ public class XMLContentHandlerImpl extends ContentHandlerImpl
            namespace.equals(XMIResource.XMI_URI));
   }
 
-  private static final XMLParserPool XML_PARSER_POOL = new XMLParserPoolImpl(1, true);
+//  private static final XMLParserPool XML_PARSER_POOL = new XMLParserPoolImpl(1, true);
   private static final Map<Object, Object> DEFAULT_SAVE_OPTIONS;
   private static final Map<Object, Object> DEFAULT_LOAD_OPTIONS;
   static
@@ -93,7 +92,7 @@ public class XMLContentHandlerImpl extends ContentHandlerImpl
     xmlOptions.setProcessAnyXML(true);
     defaultLoadOptions.put(XMLResource.OPTION_XML_OPTIONS, xmlOptions);
 
-    defaultLoadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, XML_PARSER_POOL);
+//    defaultLoadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, XML_PARSER_POOL);
 
     DEFAULT_LOAD_OPTIONS = defaultLoadOptions;
     DEFAULT_SAVE_OPTIONS = defaultSaveOptions;

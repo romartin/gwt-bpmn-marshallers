@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -74,12 +72,9 @@ import org.eclipse.emf.ecore.xml.type.SimpleAnyType;
 import org.eclipse.emf.ecore.xml.type.XMLTypeFactory;
 import org.eclipse.emf.ecore.xml.type.XMLTypePackage;
 import org.eclipse.emf.ecore.xml.type.util.XMLTypeUtil;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.DefaultHandler;
+import org.submarine.client.compat.org.xml.sax.Attributes;
+import org.submarine.client.compat.org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.helpers.DefaultHandler;
 
 
 /**
@@ -326,7 +321,6 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
   protected boolean processAnyXML;
   protected EcoreBuilder ecoreBuilder;
   protected boolean isRoot;
-  protected Locator locator;
   protected Attributes attribs;
   protected Map<EStructuralFeature, Integer> featuresToKinds;
   protected boolean useConfigurationCache;
@@ -643,7 +637,7 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
     extent = null;
     deferredExtent = null;
     attribs = null;
-    locator = null;
+//    locator = null;
     urisToLocations = null;
     resourceEntityHandler = null;
     uriHandler = null;
@@ -668,41 +662,41 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
     // Do nothing.
   }
 
-  protected XMIException toXMIException(SAXParseException e)
-  {
-    XMIException xmiException = 
-      new XMIException
-        (e.getException() == null ? e : e.getException(), 
-         e.getSystemId() == null ? getLocation() : e.getSystemId(), 
-         e.getLineNumber(), 
-         e.getColumnNumber());
-    return xmiException;
-  }
-
-  @Override
-  public void warning(SAXParseException e) throws SAXException
-  {
-    warning(toXMIException(e));
-  }
-
-  @Override
-  public void error(SAXParseException e) throws SAXException
-  {
-    error(toXMIException(e));
-  }
-
-  @Override
-  public void fatalError(SAXParseException e) throws SAXException
-  {
-    fatalError(toXMIException(e));
-    throw e;
-  }
-
-  @Override
-  public void setDocumentLocator(Locator locator)
-  {
-    setLocator(locator);
-  }
+//  protected XMIException toXMIException(SAXParseException e)
+//  {
+//    XMIException xmiException =
+//      new XMIException
+//        (e.getException() == null ? e : e.getException(),
+//         e.getSystemId() == null ? getLocation() : e.getSystemId(),
+//         e.getLineNumber(),
+//         e.getColumnNumber());
+//    return xmiException;
+//  }
+//
+//  @Override
+//  public void warning(SAXParseException e) throws SAXException
+//  {
+//    warning(toXMIException(e));
+//  }
+//
+//  @Override
+//  public void error(SAXParseException e) throws SAXException
+//  {
+//    error(toXMIException(e));
+//  }
+//
+//  @Override
+//  public void fatalError(SAXParseException e) throws SAXException
+//  {
+//    fatalError(toXMIException(e));
+//    throw e;
+//  }
+//
+//  @Override
+//  public void setDocumentLocator(Locator locator)
+//  {
+//    setLocator(locator);
+//  }
 
   @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
@@ -788,36 +782,36 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
   {
     // Do nothing.
   }
-
-  //
-  // Implement EntityResolver methods
-  //
-  @Override
-  public InputSource resolveEntity(String publicId, String systemId) throws SAXException
-  {
-    try
-    {
-      Map<Object, Object> options = new HashMap<Object, Object>();
-      options.put("publicId", publicId);
-      options.put("systemId", systemId);
-      options.put("baseLocation", resourceURI == null ? null : resourceURI.toString());
-      URI uri = URI.createURI(systemId);
-      if (resolve && uri.isRelative() && uri.hasRelativePath())
-      {
-        uri = helper.resolve(uri, resourceURI);
-      }
-      InputStream inputStream = getURIConverter().createInputStream(uri, options);
-      InputSource result = new InputSource(inputStream);
-      result.setPublicId(publicId);
-      result.setSystemId(systemId);
-      return result;
-    }
-    catch (IOException exception)
-    {
-      throw new SAXException(exception);
-    }
-  }
-  
+//
+//  //
+//  // Implement EntityResolver methods
+//  //
+//  @Override
+//  public InputSource resolveEntity(String publicId, String systemId) throws SAXException
+//  {
+//    try
+//    {
+//      Map<Object, Object> options = new HashMap<Object, Object>();
+//      options.put("publicId", publicId);
+//      options.put("systemId", systemId);
+//      options.put("baseLocation", resourceURI == null ? null : resourceURI.toString());
+//      URI uri = URI.createURI(systemId);
+//      if (resolve && uri.isRelative() && uri.hasRelativePath())
+//      {
+//        uri = helper.resolve(uri, resourceURI);
+//      }
+//      InputStream inputStream = getURIConverter().createInputStream(uri, options);
+//      InputSource result = new InputSource(inputStream);
+//      result.setPublicId(publicId);
+//      result.setSystemId(systemId);
+//      return result;
+//    }
+//    catch (IOException exception)
+//    {
+//      throw new SAXException(exception);
+//    }
+//  }
+//
   /**
    * Returns the xsi type attribute's value.
    */
@@ -902,46 +896,46 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
    * Sets the object that might be used for determining the line and
    * column number.
    */
-  protected void setLocator(Object locator)
-  {
-    this.locator = (Locator)locator;
-  }
-
-  protected void recordHeaderInformation()
-  {
-    if (locator != null)
-    {
-      Class<?> locatorClass = locator.getClass();
-      try
-      {
-        Method encodingMethod = locatorClass.getMethod("getEncoding");
-        String encoding = (String)encodingMethod.invoke(locator);
-        if (encoding != null)
-        {
-          this.xmlResource.setEncoding(encoding);
-        }
-    
-        Method versionMethod = locatorClass.getMethod("getXMLVersion");
-        String version = (String)versionMethod.invoke(locator);
-        if (version != null)
-        {
-          this.xmlResource.setXMLVersion(version);
-        }
-      }
-      catch (NoSuchMethodException e)
-      {
-        // Ignore.
-      }
-      catch (IllegalAccessException e)
-      {
-        // Ignore.
-      }
-      catch (InvocationTargetException e)
-      {
-        // Ignore.
-      }
-    }
-  }
+//  protected void setLocator(Object locator)
+//  {
+//    this.locator = (Locator)locator;
+//  }
+//
+//  protected void recordHeaderInformation()
+//  {
+//    if (locator != null)
+//    {
+//      Class<?> locatorClass = locator.getClass();
+//      try
+//      {
+//        Method encodingMethod = locatorClass.getMethod("getEncoding");
+//        String encoding = (String)encodingMethod.invoke(locator);
+//        if (encoding != null)
+//        {
+//          this.xmlResource.setEncoding(encoding);
+//        }
+//
+//        Method versionMethod = locatorClass.getMethod("getXMLVersion");
+//        String version = (String)versionMethod.invoke(locator);
+//        if (version != null)
+//        {
+//          this.xmlResource.setXMLVersion(version);
+//        }
+//      }
+//      catch (NoSuchMethodException e)
+//      {
+//        // Ignore.
+//      }
+//      catch (IllegalAccessException e)
+//      {
+//        // Ignore.
+//      }
+//      catch (InvocationTargetException e)
+//      {
+//        // Ignore.
+//      }
+//    }
+//  }
 
   @Override
   public void startDocument()
@@ -1005,7 +999,7 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
     if (isRoot)
     {
       isRoot = false;
-      recordHeaderInformation();
+//      recordHeaderInformation();
     }
     if (isError())
     {
@@ -1902,34 +1896,37 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
 
   protected int getLineNumber()
   {
-    if (locator != null)
-    {
-      return locator.getLineNumber();
-    }
-    else
-    {
-      return -1;
-    }
+    return -1;
+//    if (locator != null)
+//    {
+//      return locator.getLineNumber();
+//    }
+//    else
+//    {
+//      return -1;
+//    }
   }
 
   protected int getColumnNumber()
   {
-    if (locator != null)
-    {
-      return locator.getColumnNumber();
-    }
-    else
-    {
-      return -1;
-    }
+    return -1;
+//    if (locator != null)
+//    {
+//      return locator.getColumnNumber();
+//    }
+//    else
+//    {
+//      return -1;
+//    }
   }
 
   protected String getLocation()
   {
-    return 
-      locator != null && locator.getSystemId() != null ?
-        locator.getSystemId() :
-        resourceURI == null ? "" : resourceURI.toString();
+    return "";
+//    return
+//      locator != null && locator.getSystemId() != null ?
+//        locator.getSystemId() :
+//        resourceURI == null ? "" : resourceURI.toString();
   }
   
   protected AnyType getExtension(EObject peekObject)
@@ -2493,20 +2490,20 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
       String fragment = uri.fragment();
       Resource resource = null;
 
-      if ("java".equalsIgnoreCase(uri.scheme()) && uri.authority() != null)
-      {
-        try
-        {
-          String className = uri.authority();
-          Class<?> javaClass = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
-          Field field = javaClass.getField("eINSTANCE");
-          resource = ((EPackage)field.get(null)).eResource();
-        }
-        catch (Exception exception)
-        {
-          // Ignore it if we can't find it since we'll fail anyway.
-        }
-      }
+//      if ("java".equalsIgnoreCase(uri.scheme()) && uri.authority() != null)
+//      {
+//        try
+//        {
+//          String className = uri.authority();
+//          Class<?> javaClass = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
+//          Field field = javaClass.getField("eINSTANCE");
+//          resource = ((EPackage)field.get(null)).eResource();
+//        }
+//        catch (Exception exception)
+//        {
+//          // Ignore it if we can't find it since we'll fail anyway.
+//        }
+//      }
 
       if (resource == null && resourceSet != null)
       {

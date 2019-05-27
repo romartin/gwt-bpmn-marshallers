@@ -3,9 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.submarine.compat.org.xml.sax.ext;
+package org.submarine.client.compat.org.xml.sax.ext;
 
-import org.submarine.compat.org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.SAXException;
 
 public interface LexicalHandler {
     void startDTD(String var1, String var2, String var3) throws SAXException;

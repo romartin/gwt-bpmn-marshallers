@@ -49,7 +49,7 @@ public class StringSegment extends BasicEList<StringSegment.Element>
 
   protected int cursorIndex = 0;
 
-  protected String lineSeparator = System.getProperty("line.separator");
+  protected String lineSeparator = System.getProperty("line.separator", "\n");
 
   protected int bufferPosition;
 

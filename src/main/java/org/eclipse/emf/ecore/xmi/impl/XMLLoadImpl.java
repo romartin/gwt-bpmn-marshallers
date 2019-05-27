@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLDefaultHandler;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
-import org.eclipse.emf.ecore.xmi.XMLParserPool;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import com.google.gwt.xml.client.CDATASection;
 import com.google.gwt.xml.client.Comment;
@@ -40,11 +39,11 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.ProcessingInstruction;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.DefaultHandler;
+import org.submarine.client.compat.org.xml.sax.Attributes;
+import org.submarine.client.compat.org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.ext.LexicalHandler;
+import org.submarine.client.compat.org.xml.sax.helpers.AttributesImpl;
+import org.submarine.client.compat.org.xml.sax.helpers.DefaultHandler;
 
 
 /**
@@ -101,12 +100,12 @@ public class XMLLoadImpl implements XMLLoad
     this.options = options;
     this.namespaceAware = Boolean.FALSE.equals(options.get(XMLResource.OPTION_USE_DEPRECATED_METHODS));
     DefaultHandler handler;
-    XMLParserPool pool = (XMLParserPool)options.get(XMLResource.OPTION_USE_PARSER_POOL);
-    if (pool != null)
-    {
-      handler = (DefaultHandler)pool.getDefaultHandler(resource, this, helper, options);
-    }
-    else
+//    XMLParserPool pool = (XMLParserPool)options.get(XMLResource.OPTION_USE_PARSER_POOL);
+//    if (pool != null)
+//    {
+//      handler = (DefaultHandler)pool.getDefaultHandler(resource, this, helper, options);
+//    }
+//    else
     {
       handler = makeDefaultHandler();
     }
@@ -144,10 +143,10 @@ public class XMLLoadImpl implements XMLLoad
       // ignore
     }
 
-    if (pool != null)
-    {
-      pool.releaseDefaultHandler((XMLDefaultHandler)handler, options);
-    }
+//    if (pool != null)
+//    {
+//      pool.releaseDefaultHandler((XMLDefaultHandler)handler, options);
+//    }
 
     attributesProxy = null;
     handler = null;

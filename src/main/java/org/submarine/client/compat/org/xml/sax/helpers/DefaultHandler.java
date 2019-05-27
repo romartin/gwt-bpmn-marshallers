@@ -3,13 +3,13 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.submarine.compat.org.xml.sax.helpers;
+package org.submarine.client.compat.org.xml.sax.helpers;
 
-import org.submarine.compat.org.xml.sax.SAXException;
-import org.submarine.compat.org.xml.sax.Attributes;
-import org.submarine.compat.org.xml.sax.ContentHandler;
-import org.submarine.compat.org.xml.sax.DTDHandler;
-import org.submarine.compat.org.xml.sax.EntityResolver;
+import org.submarine.client.compat.org.xml.sax.Attributes;
+import org.submarine.client.compat.org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.ContentHandler;
+import org.submarine.client.compat.org.xml.sax.DTDHandler;
+import org.submarine.client.compat.org.xml.sax.EntityResolver;
 
 public class DefaultHandler implements EntityResolver, DTDHandler, ContentHandler/*,
                                        ErrorHandler */{

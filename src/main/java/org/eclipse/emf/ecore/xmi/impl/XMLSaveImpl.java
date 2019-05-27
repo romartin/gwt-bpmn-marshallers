@@ -3113,7 +3113,7 @@ public class XMLSaveImpl implements XMLSave
     protected final char[] LESS = { '&', 'l', 't', ';' };
     protected final char[] GREATER = { '&', 'g', 't', ';' };
     protected final char[] QUOTE = { '&', 'q', 'u', 'o', 't', ';' };
-    protected final char[] LINE_FEED = System.getProperty("line.separator").toCharArray();
+    protected final char[] LINE_FEED = System.getProperty("line.separator", "\n").toCharArray();
 
     public Escape()
     {

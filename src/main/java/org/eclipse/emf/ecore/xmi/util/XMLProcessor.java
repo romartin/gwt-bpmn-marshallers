@@ -41,11 +41,10 @@ import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.DOMHandler;
 import org.eclipse.emf.ecore.xmi.EcoreBuilder;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMLParserPoolImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
-import org.xml.sax.SAXException;
+import org.submarine.client.compat.org.xml.sax.SAXException;
 
 
 /**
@@ -82,7 +81,7 @@ public class XMLProcessor
     this.extendedMetaData = createExtendedMetaData();
     ecoreBuilder = createEcoreBuilder();
     loadOptions.put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
-    loadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, new XMLParserPoolImpl(true));
+//    loadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, new XMLParserPoolImpl(true));
     loadOptions.put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, new HashMap<String, EStructuralFeature>());
     loadOptions.put(XMLResource.OPTION_USE_DEPRECATED_METHODS, Boolean.FALSE);
     loadOptions.put(XMLResource.OPTION_CONFIGURATION_CACHE, Boolean.TRUE);
@@ -102,7 +101,7 @@ public class XMLProcessor
     ecoreBuilder = createEcoreBuilder();
     // register default options
     loadOptions.put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
-    loadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, new XMLParserPoolImpl(true));
+//    loadOptions.put(XMLResource.OPTION_USE_PARSER_POOL, new XMLParserPoolImpl(true));
     loadOptions.put(XMLResource.OPTION_USE_DEPRECATED_METHODS, Boolean.FALSE);
     loadOptions.put(XMLResource.OPTION_CONFIGURATION_CACHE, Boolean.TRUE);
     saveOptions.put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);

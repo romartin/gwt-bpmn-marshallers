@@ -3,9 +3,8 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.submarine.compat.org.xml.sax;
+package org.submarine.client.compat.org.xml.sax;
 
-import org.xml.sax.Locator;
 
 public interface ContentHandler {
 //    void setDocumentLocator(Locator var1);

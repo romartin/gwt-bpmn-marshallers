@@ -3,11 +3,10 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.submarine.compat.org.xml.sax;
+package org.submarine.client.compat.org.xml.sax;
 
 import java.io.IOException;
 
-import org.xml.sax.InputSource;
 
 public interface EntityResolver {
 //    InputSource resolveEntity(String var1, String var2) throws SAXException, IOException;

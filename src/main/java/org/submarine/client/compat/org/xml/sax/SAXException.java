@@ -3,18 +3,9 @@
 // (powered by Fernflower decompiler)
 //
 
-package org.submarine.compat.org.xml.sax;
-
-import java.io.IOException;
-import java.io.InvalidClassException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamField;
-import java.io.ObjectInputStream.GetField;
-import java.io.ObjectOutputStream.PutField;
+package org.submarine.client.compat.org.xml.sax;
 
 public class SAXException extends Exception {
-    private static final ObjectStreamField[] serialPersistentFields = new ObjectStreamField[]{new ObjectStreamField("exception", Exception.class)};
     static final long serialVersionUID = 583241635256073760L;
 
     public SAXException() {
@@ -54,26 +45,6 @@ public class SAXException extends Exception {
         } else {
             return super.toString();
         }
-    }
-
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        PutField fields = out.putFields();
-        fields.put("exception", this.getExceptionInternal());
-        out.writeFields();
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        GetField fields = in.readFields();
-        Exception exception = (Exception)fields.get("exception", (Object)null);
-        Throwable superCause = super.getCause();
-        if (superCause == null && exception != null) {
-            try {
-                super.initCause(exception);
-            } catch (IllegalStateException var6) {
-                throw new InvalidClassException("Inconsistent state: two causes");
-            }
-        }
-
     }
 
     private Exception getExceptionInternal() {

@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.xmi.XMIPlugin;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLLoad;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.xml.sax.helpers.DefaultHandler;
+import org.submarine.client.compat.org.xml.sax.helpers.DefaultHandler;
 
 
 public class GenericXMLResourceImpl extends XMLResourceImpl
