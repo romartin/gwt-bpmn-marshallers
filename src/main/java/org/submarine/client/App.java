@@ -47,12 +47,12 @@ public class App implements EntryPoint {
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        final Button sendButton = new Button("Send");
+        final Button sendButton = new Button("Unmarshall");
         final TextArea codeField = new TextArea();
         final Label textToServerLabel = new Label();
         final HTML serverResponseLabel = new HTML();
         codeField.setText(TEXT);
-        codeField.setCharacterWidth(70);
+        codeField.setWidth("90%");
         codeField.setVisibleLines(20);
 
         final Label errorLabel = new Label();
@@ -157,7 +157,7 @@ public class App implements EntryPoint {
 //                closeButton.setFocus(true);
 //                dialogBox.setText("converter");
                 // Then, we send the input to the server.
-                sendButton.setEnabled(false);
+//                sendButton.setEnabled(false);
 //                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
 //                serverResponseLabel.setHTML(String.join("<br>", errors));
 
