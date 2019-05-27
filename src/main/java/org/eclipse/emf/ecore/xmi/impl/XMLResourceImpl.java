@@ -26,6 +26,7 @@ import java.util.WeakHashMap;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.XMLParser;

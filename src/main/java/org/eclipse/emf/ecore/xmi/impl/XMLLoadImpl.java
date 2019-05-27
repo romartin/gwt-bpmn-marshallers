@@ -25,6 +25,7 @@ import java.util.Set;
 //import javax.xml.parsers.SAXParser;
 //import javax.xml.parsers.SAXParserFactory;
 
+import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLDefaultHandler;
@@ -340,8 +341,8 @@ public class XMLLoadImpl implements XMLLoad
           namespaceURI = "";
         }
         String localName = getLocalName(node);
-        String qname = node.getNodeName();   
-        
+        String qname = node.getNodeName();
+
         handler.startElement(namespaceURI, localName, qname, filteredAttributes == null ? attributesProxy: filteredAttributes);
 
         Node child = node.getFirstChild();

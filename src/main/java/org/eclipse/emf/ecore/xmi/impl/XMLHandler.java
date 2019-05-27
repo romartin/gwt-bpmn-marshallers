@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;

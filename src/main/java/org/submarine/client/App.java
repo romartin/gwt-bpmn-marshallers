@@ -2,8 +2,6 @@ package org.submarine.client;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -13,16 +11,24 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
+import org.submarine.client.eclipse.bpmn2.Bpmn2Package;
+import org.submarine.client.eclipse.bpmn2.DocumentRoot;
+import org.submarine.client.eclipse.bpmn2.FlowElement;
+import org.submarine.client.eclipse.bpmn2.Process;
+import org.submarine.client.eclipse.bpmn2.util.XmlExtendedMetadata;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -127,9 +133,22 @@ public class App implements EntryPoint {
 //                List<String> errors = xmlLoad.errors;
                 Document doc = parser.parse(text);
 //                List<EObject> results = xmlLoad.load(doc);;
+                final ResourceSet resourceSet = new ResourceSetImpl();
+
+                EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
+                packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
+//                packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
                 XMLResourceImpl xmlResource = new XMLResourceImpl();
+                HashMap<Object, Object> options = new HashMap<>();
+//                options.put(XMLResource.OPTION_DOM_USE_NAMESPACES_IN_SCOPE, true);
+                options.put(XMLResource.OPTION_EXTENDED_META_DATA, new XmlExtendedMetadata());
+                options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
+                options.put(XMLResource.OPTION_DISABLE_NOTIFY, true);
+                options.put(XMLResource.OPTION_PROCESS_DANGLING_HREF,
+                            XMLResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
+
                 try {
-                    xmlResource.load(doc.getDocumentElement(), new HashMap<>());
+                    xmlResource.load(doc.getDocumentElement(), options);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -142,8 +161,12 @@ public class App implements EntryPoint {
 //                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
 //                serverResponseLabel.setHTML(String.join("<br>", errors));
 
-                textToServerLabel.setText(xmlResource.getContents().toString());
-
+                DocumentRoot docRoot = (DocumentRoot) xmlResource.getContents().get(0);
+                textToServerLabel.setText(String.valueOf(docRoot.getDefinitions().getRootElements().stream()
+                                                                 .filter(p -> p instanceof Process)
+                                                                 .map(p -> (Process) p)
+                                                                 .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
+                                                                 .collect(toList())));
             }
         }
 
@@ -152,7 +175,6 @@ public class App implements EntryPoint {
         sendButton.addClickHandler(handler);
         codeField.addKeyUpHandler(handler);
     }
-
 
     private static final String TEXT =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
