@@ -1,10 +1,8 @@
 package org.submarine.client;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -15,18 +13,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Package;
 import org.submarine.client.eclipse.bpmn2.DocumentRoot;
 import org.submarine.client.eclipse.bpmn2.FlowElement;
 import org.submarine.client.eclipse.bpmn2.Process;
-import org.submarine.client.eclipse.bpmn2.util.XmlExtendedMetadata;
 
 import static java.util.stream.Collectors.toList;
 
@@ -71,34 +60,7 @@ public class App implements EntryPoint {
         // Focus the cursor on the name field when the app loads
         codeField.setFocus(true);
         codeField.selectAll();
-//
-//        // Create the popup dialog box
-//        final DialogBox dialogBox = new DialogBox();
-//        dialogBox.setWidth("800");
-//
-//        dialogBox.setText("Remote Procedure Call");
-//        dialogBox.setAnimationEnabled(true);
-//        final Button closeButton = new Button("Close");
-//        // We can set the id of a widget by accessing its Element
-//        closeButton.getElement().setId("closeButton");
-//        VerticalPanel dialogVPanel = new VerticalPanel();
-//        dialogVPanel.addStyleName("dialogVPanel");
-//        dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-//        dialogVPanel.add(textToServerLabel);
-//        dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-//        dialogVPanel.add(serverResponseLabel);
-//        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-//        dialogVPanel.add(closeButton);
-//        dialogBox.setWidget(dialogVPanel);
 
-        // Add a handler to close the DialogBox
-//        closeButton.addClickHandler(new ClickHandler() {
-//            public void onClick(ClickEvent event) {
-//                dialogBox.hide();
-//                sendButton.setEnabled(true);
-//                sendButton.setFocus(true);
-//            }
-//        });
 
         // Create a handler for the sendButton and nameField
         class MyHandler implements ClickHandler,
@@ -108,7 +70,7 @@ public class App implements EntryPoint {
              * Fired when the user clicks on the sendButton.
              */
             public void onClick(ClickEvent event) {
-                sendNameToServer();
+                doUnmarshall();
             }
 
             /**
@@ -116,52 +78,28 @@ public class App implements EntryPoint {
              */
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                    sendNameToServer();
+                    doUnmarshall();
                 }
             }
 
             /**
              * Send the name from the nameField to the server and wait for a response.
              */
-            private void sendNameToServer() {
+            private void doUnmarshall() {
                 // First, we validate the input.
                 errorLabel.setText("");
                 String textToServer = codeField.getText();
                 String text = codeField.getText();
-                XMLParser parser = GWT.create(XMLParser.class);
-//                XmlLoad xmlLoad = new XmlLoad();
-//                List<String> errors = xmlLoad.errors;
-                Document doc = parser.parse(text);
-//                List<EObject> results = xmlLoad.load(doc);;
-                final ResourceSet resourceSet = new ResourceSetImpl();
 
-                EPackage.Registry packageRegistry = resourceSet.getPackageRegistry();
-                packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-//                packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
-                XMLResourceImpl xmlResource = new XMLResourceImpl();
-                HashMap<Object, Object> options = new HashMap<>();
-//                options.put(XMLResource.OPTION_DOM_USE_NAMESPACES_IN_SCOPE, true);
-                options.put(XMLResource.OPTION_EXTENDED_META_DATA, new XmlExtendedMetadata());
-                options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
-                options.put(XMLResource.OPTION_DISABLE_NOTIFY, true);
-                options.put(XMLResource.OPTION_PROCESS_DANGLING_HREF,
-                            XMLResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
-
+                Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
                 try {
-                    xmlResource.load(doc.getDocumentElement(), options);
+                    bpmn2Resource.load(text);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 serverResponseLabel.addStyleName("serverResponseLabelError");
-//                dialogBox.center();
-//                closeButton.setFocus(true);
-//                dialogBox.setText("converter");
-                // Then, we send the input to the server.
-//                sendButton.setEnabled(false);
-//                textToServerLabel.setText(results.stream().map(Object::toString).collect(Collectors.joining("\n")));
-//                serverResponseLabel.setHTML(String.join("<br>", errors));
 
-                DocumentRoot docRoot = (DocumentRoot) xmlResource.getContents().get(0);
+                DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
                 textToServerLabel.setText(String.valueOf(docRoot.getDefinitions().getRootElements().stream()
                                                                  .filter(p -> p instanceof Process)
                                                                  .map(p -> (Process) p)
