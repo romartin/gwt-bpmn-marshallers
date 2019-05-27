@@ -4,4 +4,8 @@ EMF/ECore BPMN2 parser demo with full client-side XML parsing (XMI shim) and dat
  
  ![screen](imgs/screen.gif)
  
+### Usage
  
+```
+   mvn compile gwt:run
+```
