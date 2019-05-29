@@ -13,9 +13,9 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import org.submarine.client.eclipse.bpmn2.DocumentRoot;
-import org.submarine.client.eclipse.bpmn2.FlowElement;
-import org.submarine.client.eclipse.bpmn2.Process;
+import org.eclipse.bpmn2.DocumentRoot;
+import org.eclipse.bpmn2.FlowElement;
+import org.eclipse.bpmn2.Process;
 
 import static java.util.stream.Collectors.toList;
 

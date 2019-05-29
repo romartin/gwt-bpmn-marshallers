@@ -11,8 +11,8 @@ import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
-import org.submarine.client.eclipse.bpmn2.Bpmn2Package;
-import org.submarine.client.eclipse.bpmn2.util.XmlExtendedMetadata;
+import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.util.XmlExtendedMetadata;
 
 public class Bpmn2Resource extends XMLResourceImpl {
     static {

@@ -26,6 +26,7 @@
 
   <modules>
     <module>org.eclipse.emf.ecore.xmi</module>
+    <module>bpmn-eclipse-models</module>
     <module>org.eclipse.emf.ecore.xmi.demo</module>
   </modules>
 

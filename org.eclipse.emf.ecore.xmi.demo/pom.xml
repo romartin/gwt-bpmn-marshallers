@@ -50,7 +50,17 @@
       <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
       <classifier>sources</classifier>
     </dependency>
-
+    <dependency>
+      <groupId>org.submarine</groupId>
+      <artifactId>bpmn-eclipse-models</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.submarine</groupId>
+      <artifactId>bpmn-eclipse-models</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <classifier>sources</classifier>
+    </dependency>
     <dependency>
       <groupId>org.eclipselabs</groupId>
       <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
