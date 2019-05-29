@@ -5,10 +5,9 @@
   <!-- POM file generated with GWT webAppCreator -->
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.submarine</groupId>
-  <artifactId>org.eclipse.emf.ecore.xmi.parent</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>org.submarine.App</name>
+
 
   <properties>
 
@@ -21,13 +20,8 @@
     <!-- Don't let your Mac use a crazy non-standard encoding -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+    <jaxb.version>2.2.12</jaxb.version> <!-- Needed due to unsupported JEP-238 in Jetty shipped with GWT plugin -->
   </properties>
-
-  <modules>
-    <module>org.eclipse.emf.ecore.xmi</module>
-    <module>org.eclipse.emf.ecore.xmi.demo</module>
-  </modules>
 
   <dependencyManagement>
     <dependencies>
@@ -39,26 +33,33 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>org.submarine</groupId>
-        <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-        <groupId>org.submarine</groupId>
-        <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <classifier>sources</classifier>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
+<!--    <dependency>-->
+<!--      <groupId>org.eclipse.emf</groupId>-->
+<!--      <artifactId>org.eclipse.emf.ecore.xmi</artifactId>-->
+<!--      <version>2.5.0.v20100521-1846</version>-->
+<!--      <exclusions>-->
+<!--        <exclusion>-->
+<!--          <groupId>org.eclipse.emf</groupId>-->
+<!--          <artifactId>org.eclipse.emf.ecore</artifactId>-->
+<!--        </exclusion>-->
+<!--      </exclusions>-->
+<!--    </dependency>-->
+
     <dependency>
       <groupId>org.eclipselabs</groupId>
       <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
       <version>2.9.0</version>
     </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>org.eclipselabs</groupId>-->
+    <!--      <artifactId>org.eclipse.emf.gwt.ecore</artifactId>-->
+    <!--      <version>2.9.0</version>-->
+    <!--      <classifier>source</classifier>-->
+    <!--    </dependency>-->
 
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -81,13 +82,19 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.gwt.gwtmockito</groupId>
+      <artifactId>gwtmockito</artifactId>
+      <version>1.1.8</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
-    <!-- Output classes directly into the webapp, so that IDEs and "mvn process-classes" update them in DevMode -->
-    <!--    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>-->
-    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-    <finalName>${project.artifactId}</finalName>
+<!--    &lt;!&ndash; Output classes directly into the webapp, so that IDEs and "mvn process-classes" update them in DevMode &ndash;&gt;-->
+<!--    &lt;!&ndash;    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>&ndash;&gt;-->
+<!--    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>-->
+<!--    <finalName>${project.artifactId}</finalName>-->
 
     <plugins>
       <!-- GWT Maven Plugin-->
@@ -104,26 +111,30 @@
             </goals>
           </execution>
         </executions>        <configuration>
-          <module>org.submarine.App</module>
+          <module>org.eclipse.emf.ecore.xmi.Xmi</module>
           <style>PRETTY</style>
           <compileReport>true</compileReport>
           <soycDetailed>true</soycDetailed>
           <logLevel>INFO</logLevel>
           <noServer>false</noServer>
           <superDevMode>true</superDevMode>
-          <runTarget>App.html</runTarget>
-          <hostedWebapp>src/main/webapp</hostedWebapp>
-          <workDir>${project.build.directory}</workDir>
+<!--          <runTarget>App.html</runTarget>-->
+<!--          <hostedWebapp>src/main/webapp</hostedWebapp>-->
+<!--          <workDir>${project.build.directory}</workDir>-->
         </configuration>
       </plugin>
 
-      <!-- Skip normal test execution, we use gwt:test instead -->
       <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.17</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
     </plugins>

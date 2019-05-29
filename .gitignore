@@ -2,8 +2,8 @@
 *.iml
 target/
 
-/src/main/webapp/app/
-/src/main/gwt-unitCache/
-/src/main/webapp/WEB-INF/classes/
-/src/main/webapp/WEB-INF/lib/
+**/webapp/app/
+**/gwt-unitCache/
+**/webapp/WEB-INF/classes/
+**/webapp/WEB-INF/lib/
 

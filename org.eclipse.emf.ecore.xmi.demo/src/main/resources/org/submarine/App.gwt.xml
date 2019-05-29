@@ -20,6 +20,7 @@
 
   <!-- Other module inherits                                      -->
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
+  <inherits name='org.eclipse.emf.ecore.xmi.Xmi'/>
   <set-property name="compiler.useSourceMaps" value="true"/>
 
   <!-- Specify the app entry point class.                         -->

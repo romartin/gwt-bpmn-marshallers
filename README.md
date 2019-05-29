@@ -7,5 +7,6 @@ EMF/ECore BPMN2 parser demo with full client-side XML parsing (XMI shim) and dat
 ### Usage
  
 ```
-   mvn compile gwt:run
+   cd org.eclipse.emf.ecore.xmi && mvn install
+   cd org.eclipse.emf.ecore.xmi.demo && mvn gwt:run
 ```
