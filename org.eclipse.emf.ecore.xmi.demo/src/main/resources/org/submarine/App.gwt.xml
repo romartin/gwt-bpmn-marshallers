@@ -20,7 +20,7 @@
 
   <!-- Other module inherits                                      -->
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
-  <inherits name='org.eclipse.emf.ecore.xmi.Xmi'/>
+  <inherits name='org.eclipse.emf.ecore.Xmi'/>
   <inherits name='org.eclipse.Bpmn2'/>
   <set-property name="compiler.useSourceMaps" value="true"/>
 
@@ -30,8 +30,8 @@
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
-  <source path='shared'/>
-  <super-source path="compat"/>
+<!--  <source path='shared'/>-->
+<!--  <super-source path="compat"/>-->
 
   <set-property name="user.agent" value="safari" />
 

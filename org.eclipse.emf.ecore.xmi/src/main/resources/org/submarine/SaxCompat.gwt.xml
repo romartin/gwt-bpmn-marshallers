@@ -7,7 +7,5 @@
     "http://gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
   <!-- Specify the paths for translatable code                    -->
-  <source path='client'/>
-  <source path='shared'/>
-  <super-source path="compat"/>
+ <super-source path="compat"/>
 </module>
