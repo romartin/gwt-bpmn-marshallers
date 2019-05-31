@@ -124,6 +124,7 @@
           </execution>
         </executions>
         <configuration>
+          <strict>true</strict>
           <module>org.submarine.App</module>
           <style>PRETTY</style>
           <compileReport>true</compileReport>

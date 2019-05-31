@@ -20,7 +20,6 @@ package org.eclipse.emf.ecore.xmi.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -139,10 +138,10 @@ public class XMLProcessor
         }
       }
     }
-    catch (InvocationTargetException ie)
-    {
-      throw new SAXException((Exception)ie.getTargetException());
-    }
+//    catch (InvocationTargetException ie)
+//    {
+//      throw new SAXException((Exception)ie.getTargetException());
+//    }
     catch (Exception e)
     {
       throw new SAXException(e);
