@@ -13,5 +13,6 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='org.eclipse.emf.ecore.xmi'/>
+  <source path='org.submarine.client.compat'/>
 
 </module>
