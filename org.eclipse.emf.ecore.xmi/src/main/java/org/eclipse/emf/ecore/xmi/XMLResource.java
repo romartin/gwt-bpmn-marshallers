@@ -17,9 +17,9 @@
 package org.eclipse.emf.ecore.xmi;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Writer;
+//import java.io.InputStream;
+//import java.io.OutputStream;
+//import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
@@ -379,41 +379,41 @@ public interface XMLResource extends Resource
    * An interface for a resource handler that can be registered to receive call backs 
    * for loading from an input stream or for saving to an output stream.
    */
-  interface ResourceHandler
-  {
-    /**
-     * Called before loading begins.
-     * @param resource the resource being loaded.
-     * @param inputStream the stream being read.
-     * @param options the load options.
-     */
-    void preLoad(XMLResource resource, InputStream inputStream, Map<?, ?> options);
-
-    /**
-     * Called after loading is done.
-     * @param resource the resource being loaded.
-     * @param inputStream the stream being read.
-     * @param options the load options.
-     */
-    void postLoad(XMLResource resource, InputStream inputStream, Map<?, ?> options);
-
-    /**
-     * Called before saving begins.
-     * @param resource the resource being saved.
-     * @param outputStream the stream being written.
-     * @param options the save options.
-     */
-    void preSave(XMLResource resource, OutputStream outputStream, Map<?, ?> options);
-
-    /**
-     * Called before saving begins.
-     * @param resource the resource being saved.
-     * @param outputStream the stream being written.
-     * @param options the save options.
-     */
-    void postSave(XMLResource resource, OutputStream outputStream, Map<?, ?> options);
-  }
-  
+//  interface ResourceHandler
+//  {
+//    /**
+//     * Called before loading begins.
+//     * @param resource the resource being loaded.
+//     * @param inputStream the stream being read.
+//     * @param options the load options.
+//     */
+//    void preLoad(XMLResource resource, InputStream inputStream, Map<?, ?> options);
+//
+//    /**
+//     * Called after loading is done.
+//     * @param resource the resource being loaded.
+//     * @param inputStream the stream being read.
+//     * @param options the load options.
+//     */
+//    void postLoad(XMLResource resource, InputStream inputStream, Map<?, ?> options);
+//
+//    /**
+//     * Called before saving begins.
+//     * @param resource the resource being saved.
+//     * @param outputStream the stream being written.
+//     * @param options the save options.
+//     */
+//    void preSave(XMLResource resource, OutputStream outputStream, Map<?, ?> options);
+//
+//    /**
+//     * Called before saving begins.
+//     * @param resource the resource being saved.
+//     * @param outputStream the stream being written.
+//     * @param options the save options.
+//     */
+//    void postSave(XMLResource resource, OutputStream outputStream, Map<?, ?> options);
+//  }
+//
   /**
    * Defer adding the root object to the resource until the end of the load when the tree is complete.
    * The default value is Boolean.FALSE.

@@ -19,9 +19,7 @@ package org.eclipse.emf.ecore.xmi.impl;
 
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -2526,23 +2523,24 @@ public abstract class XMLHandler extends DefaultHandler implements XMLDefaultHan
         }
         else if (!XMLResource.XML_SCHEMA_URI.equals(uriString))
         {
-          try
-          {
-            InputStream inputStream = getURIConverter().createInputStream(trimmedURI, null);
-            resource = resourceSet.createResource(trimmedURI);
-            if (resource == null)
-            {
-              inputStream.close();
-            }
-            else
-            {
-              resource.load(inputStream, resourceSet.getLoadOptions());
-            }
-          }
-          catch (IOException exception)
-          {
-            // Continue with a different approach.
-          }
+          throw new UnsupportedOperationException("cannot open XML schema from URI");
+//          try
+//          {
+//            InputStream inputStream = getURIConverter().createInputStream(trimmedURI, null);
+//            resource = resourceSet.createResource(trimmedURI);
+//            if (resource == null)
+//            {
+//              inputStream.close();
+//            }
+//            else
+//            {
+//              resource.load(inputStream, resourceSet.getLoadOptions());
+//            }
+//          }
+//          catch (IOException exception)
+//          {
+//            // Continue with a different approach.
+//          }
         }
       }
 

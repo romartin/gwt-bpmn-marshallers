@@ -52,6 +52,12 @@
       <groupId>org.eclipselabs</groupId>
       <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
       <version>2.9.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.eclipselabs</groupId>
+          <artifactId>org.eclipse.emf.gwt.common</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
