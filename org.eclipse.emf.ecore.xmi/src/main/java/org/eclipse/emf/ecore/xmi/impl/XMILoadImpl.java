@@ -16,7 +16,7 @@
  */
 package org.eclipse.emf.ecore.xmi.impl;
 
-import org.submarine.client.compat.org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.DefaultHandler;
 
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 

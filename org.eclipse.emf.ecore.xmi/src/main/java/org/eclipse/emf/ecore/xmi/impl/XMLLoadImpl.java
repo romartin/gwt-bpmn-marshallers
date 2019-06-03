@@ -40,11 +40,11 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.ProcessingInstruction;
-import org.submarine.client.compat.org.xml.sax.Attributes;
-import org.submarine.client.compat.org.xml.sax.SAXException;
-import org.submarine.client.compat.org.xml.sax.ext.LexicalHandler;
-import org.submarine.client.compat.org.xml.sax.helpers.AttributesImpl;
-import org.submarine.client.compat.org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.ext.LexicalHandler;
+import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.DefaultHandler;
 
 
 /**

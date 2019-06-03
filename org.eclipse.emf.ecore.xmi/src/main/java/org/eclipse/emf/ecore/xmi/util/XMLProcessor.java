@@ -43,7 +43,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
-import org.submarine.client.compat.org.xml.sax.SAXException;
+import org.xml.sax.SAXException;
 
 
 /**
