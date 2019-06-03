@@ -25,7 +25,6 @@ import java.util.Set;
 //import javax.xml.parsers.SAXParser;
 //import javax.xml.parsers.SAXParserFactory;
 
-import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLDefaultHandler;
@@ -40,11 +39,11 @@ import com.google.gwt.xml.client.Element;
 import com.google.gwt.xml.client.NamedNodeMap;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.ProcessingInstruction;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.DefaultHandler;
+import org.sax.Attributes;
+import org.sax.SAXException;
+import org.sax.ext.LexicalHandler;
+import org.sax.helpers.AttributesImpl;
+import org.sax.helpers.DefaultHandler;
 
 
 /**

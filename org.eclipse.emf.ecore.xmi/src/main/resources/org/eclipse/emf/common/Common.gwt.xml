@@ -3,7 +3,6 @@
 <module>
   <inherits name="com.google.gwt.user.User"/>
   <!--	<inherits name="org.eclipse.emf.emul.Emulation"/>-->
-  <inherits name="org.submarine.SaxCompat" />
   <source path=""/>
   <source path="command"/>
   <source path="notify"/>

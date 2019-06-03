@@ -16,7 +16,7 @@
  */
 package org.eclipse.emf.ecore.xmi.impl;
 
-import org.xml.sax.helpers.DefaultHandler;
+import org.sax.helpers.DefaultHandler;
 
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 

@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
+import org.sax.Attributes;
+import org.sax.SAXException;
 
 
 /**

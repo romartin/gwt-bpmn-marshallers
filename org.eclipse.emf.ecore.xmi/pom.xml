@@ -116,8 +116,13 @@
               <goal>test</goal>
             </goals>
           </execution>
-        </executions>        <configuration>
-          <module>org.eclipse.emf.ecore.Xmi</module>
+        </executions>
+        <configuration>
+          <modules>
+            <modules>org.SaxCompat</modules>
+            <modules>org.eclipse.emf.common.Common</modules>
+            <modules>org.eclipse.emf.ecore.Xmi</modules>
+          </modules>
           <style>PRETTY</style>
           <compileReport>true</compileReport>
           <soycDetailed>true</soycDetailed>

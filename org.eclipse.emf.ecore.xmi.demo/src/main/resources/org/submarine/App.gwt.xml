@@ -18,11 +18,11 @@
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
-  <!-- Other module inherits                                      -->
-  <inherits name='org.eclipse.emf.ecore.Ecore'/>
-  <inherits name='org.eclipse.emf.ecore.Xmi'/>
+  <!-- Other module inherits       -->
+<!--  <inherits name="org.sax.SaxCompat" />-->
   <inherits name='org.eclipse.Bpmn2'/>
-  <set-property name="compiler.useSourceMaps" value="true"/>
+
+<!--  <set-property name="compiler.useSourceMaps" value="true"/>-->
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.submarine.client.App'/>

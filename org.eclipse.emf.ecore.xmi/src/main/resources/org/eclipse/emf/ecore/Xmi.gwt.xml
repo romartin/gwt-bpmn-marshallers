@@ -7,8 +7,8 @@
   <inherits name="com.google.gwt.xml.XML" />
 
   <!-- Other module inherits                                      -->
+  <inherits name="org.SaxCompat" />
   <inherits name='org.eclipse.emf.ecore.Ecore'/>
-  <inherits name="org.submarine.SaxCompat" />
   <set-property name="compiler.useSourceMaps" value="true"/>
 
   <!-- Specify the paths for translatable code                    -->

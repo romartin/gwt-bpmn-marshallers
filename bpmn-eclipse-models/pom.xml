@@ -108,18 +108,19 @@
               <goal>test</goal>
             </goals>
           </execution>
-        </executions>        <configuration>
-        <module>org.eclipse.emf.ecore.xmi.Xmi</module>
-        <style>PRETTY</style>
-        <compileReport>true</compileReport>
-        <soycDetailed>true</soycDetailed>
-        <logLevel>INFO</logLevel>
-        <noServer>false</noServer>
-        <superDevMode>true</superDevMode>
-        <!--          <runTarget>App.html</runTarget>-->
-        <!--          <hostedWebapp>src/main/webapp</hostedWebapp>-->
-        <!--          <workDir>${project.build.directory}</workDir>-->
-      </configuration>
+        </executions>
+        <configuration>
+          <module>org.eclipse.Bpmn2</module>
+          <style>PRETTY</style>
+          <compileReport>true</compileReport>
+          <soycDetailed>true</soycDetailed>
+          <logLevel>INFO</logLevel>
+          <noServer>false</noServer>
+          <superDevMode>true</superDevMode>
+          <!--          <runTarget>App.html</runTarget>-->
+          <!--          <hostedWebapp>src/main/webapp</hostedWebapp>-->
+          <!--          <workDir>${project.build.directory}</workDir>-->
+        </configuration>
       </plugin>
 
       <plugin>
