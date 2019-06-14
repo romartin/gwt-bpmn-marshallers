@@ -1,8 +1,7 @@
 package org.submarine.client;
 
-import java.io.IOException;
-
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -13,11 +12,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.xml.client.Document;
 import org.eclipse.bpmn2.DocumentRoot;
-import org.eclipse.bpmn2.FlowElement;
-import org.eclipse.bpmn2.Process;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -61,7 +57,6 @@ public class App implements EntryPoint {
         codeField.setFocus(true);
         codeField.selectAll();
 
-
         // Create a handler for the sendButton and nameField
         class MyHandler implements ClickHandler,
                                    KeyUpHandler {
@@ -86,25 +81,32 @@ public class App implements EntryPoint {
              * Send the name from the nameField to the server and wait for a response.
              */
             private void doUnmarshall() {
-                // First, we validate the input.
-                errorLabel.setText("");
-                String textToServer = codeField.getText();
-                String text = codeField.getText();
-
-                Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
                 try {
-                    bpmn2Resource.load(text);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                serverResponseLabel.addStyleName("serverResponseLabelError");
+                    // First, we validate the input.
+                    errorLabel.setText("");
+                    String textToServer = codeField.getText();
+                    String text = codeField.getText();
 
-                DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
-                textToServerLabel.setText(String.valueOf(docRoot.getDefinitions().getRootElements().stream()
-                                                                 .filter(p -> p instanceof Process)
-                                                                 .map(p -> (Process) p)
-                                                                 .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
-                                                                 .collect(toList())));
+                    Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
+                    bpmn2Resource.load(text);
+                    serverResponseLabel.addStyleName("serverResponseLabelError");
+
+                    DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
+//                String contents = String.valueOf(
+//                        docRoot.getDefinitions().getRootElements().stream()
+//                                .filter(p -> p instanceof Process)
+//                                .map(p -> (Process) p)
+//                                .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
+//                                .collect(toList()));
+
+                    String contents = docRoot.getDefinitions().getRootElements().toString();
+//                textToServerLabel.setText(contents);
+                    Document result = bpmn2Resource.save();
+
+                    textToServerLabel.setText(result.toString());
+                } catch (Exception e) {
+                    GWT.log("caught exception", e);
+                }
             }
         }
 

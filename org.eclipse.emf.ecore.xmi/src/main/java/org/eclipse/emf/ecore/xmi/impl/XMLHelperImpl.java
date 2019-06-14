@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
@@ -803,11 +804,19 @@ public class XMLHelperImpl implements XMLHelper
 
     objectURI = deresolve(objectURI);
 
-    return objectURI.toString();
+    return objectURI ==  null? "unknown" : objectURI.toString();
   }
 
   protected URI getHREF(Resource otherResource, EObject obj)
   {
+    if (otherResource == null) {
+      GWT.log("WARN: otherResource == null");
+      return null;
+    }
+    if (otherResource.getURI() == null) {
+      GWT.log("WARN: otherResource.getURI() == null");
+      return null;
+    }
     return otherResource.getURI().appendFragment(getURIFragment(otherResource, obj));
   }
 

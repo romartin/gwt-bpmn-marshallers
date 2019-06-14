@@ -14,6 +14,8 @@
  */
 package org.eclipse.bpmn2.impl;
 
+import java.util.Iterator;
+
 import com.google.gwt.user.client.rpc.GwtTransient;
 
 import org.eclipse.bpmn2.Bpmn2Package;
@@ -141,7 +143,26 @@ public class FormalExpressionImpl extends ExpressionImpl implements FormalExpres
 	public String getBody() {
 		// TODO: implement this method to return the 'Body' attribute
 		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		// FIXME evacchi: this was empty because StringBuilder was used!!
+		if (this.mixed != null && !this.mixed.isEmpty()) {
+			String result = "";
+			Iterator var3 = this.mixed.iterator();
+
+			while(var3.hasNext()) {
+				FeatureMap.Entry cur = (FeatureMap.Entry)var3.next();
+				switch(cur.getEStructuralFeature().getFeatureID()) {
+					case 3:
+					case 6:
+						result+=cur.getValue();
+					case 4:
+					case 5:
+				}
+			}
+
+			return result.toString();
+		} else {
+			return null;
+		}
 	}
 
 	/**

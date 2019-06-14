@@ -17,6 +17,7 @@
   <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+  <set-property name="compiler.useSourceMaps" value="true"/>
 
   <!-- Other module inherits       -->
 <!--  <inherits name="org.sax.SaxCompat" />-->

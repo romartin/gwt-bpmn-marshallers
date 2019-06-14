@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -642,6 +643,7 @@ public class XMLSaveImpl implements XMLSave
         {
           currentNode = currentNode.appendChild(document.createElement(/*fixme ns:nameInfo.getNamespaceURI(), */ nameInfo.getQualifiedName()));
         }
+        GWT.log("CREATED ELEMENT "+currentNode.toString());
         handler.recordValues(currentNode, null, null, top);
         root = top;
         saveElementID(top);
@@ -949,6 +951,7 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           currentNode = currentNode.appendChild(document.createElement(/* fixme ns helper.getNamespaceURI(prefix), */elementName));
+          GWT.log("1) CREATED ELEMENT "+currentNode.toString());
           handler.recordValues(currentNode, o.eContainer(), f, o);
         }
         saveElementID(o);
@@ -972,12 +975,14 @@ public class XMLSaveImpl implements XMLSave
           if (currentNode == null)
           {
             currentNode = document.createElement(/* fixme ns nameInfo.getNamespaceURI(), */nameInfo.getQualifiedName());
+            GWT.log("2) CREATED ELEMENT "+currentNode.toString());
             document.appendChild(currentNode);
             handler.recordValues(currentNode, o.eContainer(), f, o);
           }
           else
           {
             currentNode = currentNode.appendChild(document.createElement(/* fixme ns nameInfo.getNamespaceURI(), */ nameInfo.getQualifiedName()));
+            GWT.log("3) CREATED ELEMENT "+currentNode.toString());
             handler.recordValues(currentNode, o.eContainer(), f, o);
           }
         }
@@ -1010,15 +1015,18 @@ public class XMLSaveImpl implements XMLSave
     EDataType eDataType = null;
     if (shouldSaveType)
     {
+      GWT.log("should save type");
       EClassifier eClassifier =
         eClass == anySimpleType ?
           eDataType = ((SimpleAnyType)o).getInstanceType() :
           eClass;
       if (elementHandler != null)
       {
+        GWT.log("ELEMENT HANDLER NOT NULL");
         EStructuralFeature substitutionGroup = featureTable.getSubstitutionGroup(f, eClassifier);
         if (substitutionGroup != null)
         {
+          GWT.log("SUBST GROUP NOT NULL");
           f = substitutionGroup;
           shouldSaveType = substitutionGroup.getEType() != eClassifier;
         }
@@ -1037,12 +1045,14 @@ public class XMLSaveImpl implements XMLSave
       {
         // this is a root element
         currentNode = document.createElement(/* fixme ns nameInfo.getNamespaceURI(), */ nameInfo.getQualifiedName());
+        GWT.log("4) CREATED ELEMENT "+currentNode.toString());
         document.appendChild(currentNode);
         handler.recordValues(currentNode, o.eContainer(), f, o);
       }
       else
       {
         currentNode = currentNode.appendChild(document.createElement(/* fixme ns nameInfo.getNamespaceURI(), */ nameInfo.getQualifiedName()));
+        GWT.log("5) CREATED ELEMENT "+currentNode.toString());
         handler.recordValues(currentNode, o.eContainer(), f, o);
       }
     }
@@ -1150,6 +1160,7 @@ public class XMLSaveImpl implements XMLSave
           }
           case DATATYPE_SINGLE:
           {
+            GWT.log("SAVING: "+o.eClass());
             saveDataTypeSingle(o, f);
             continue LOOP;
           }
@@ -1335,6 +1346,7 @@ public class XMLSaveImpl implements XMLSave
       }
     }
 
+    GWT.log("DONE PROCESSING ATTRIBUTES");
     processAttributeExtensions(o);
 
     if (elementFeatures == null)
@@ -1573,7 +1585,11 @@ public class XMLSaveImpl implements XMLSave
       else
       {
         helper.populateNameInfo(nameInfo, f);
-        throw new UnsupportedOperationException("not yet implemented");
+        // fixme
+        // throw new UnsupportedOperationException("not yet implemented: saveDataTypeSingle");
+        GWT.log("fixme: saveDataTypeSingle");
+        ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), svalue);
+        GWT.log(currentNode.toString());
 //        Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //        attr.setNodeValue(svalue);
 //        ((Element)currentNode).setAttributeNodeNS(attr);
@@ -1624,7 +1640,9 @@ public class XMLSaveImpl implements XMLSave
     else
     {
       helper.populateNameInfo(nameInfo, f);
-      throw new UnsupportedOperationException("not yet implemented");
+      // fixme
+//      throw new UnsupportedOperationException("not yet implemented: saveManyEmpty");
+      GWT.log("not yet implemented: saveManyEmpty");
 //      Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //      ((Element)currentNode).setAttributeNodeNS(attr);
 //      handler.recordValues(attr, o, f, null);
@@ -1738,7 +1756,12 @@ public class XMLSaveImpl implements XMLSave
       else
       {
         helper.populateNameInfo(nameInfo, f);
-        throw new UnsupportedOperationException("not yet implemented");
+        // fixme
+//        throw new UnsupportedOperationException("not yet implemented: saveDataTypeAttributeMany");
+        GWT.log("not yet implemented: saveDataTypeAttributeMany");
+        ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), stringValues.toString());
+        GWT.log(currentNode.toString());
+
 //        Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //        String  value = stringValues.toString();
 //        attr.setNodeValue(value);
@@ -1779,7 +1802,11 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          throw new UnsupportedOperationException("not yet implemented");
+          // fixme
+//          throw new UnsupportedOperationException("not yet implemented: saveEObjectSingle");
+          GWT.log("not yet implemented: saveEObjectSingle");
+          ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), buffer.toString());
+          GWT.log(currentNode.toString());
 
 //          Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //          attr.setNodeValue(buffer.toString());
@@ -1848,7 +1875,10 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          throw new UnsupportedOperationException();
+          //fixme
+          GWT.log("saveEObjectMany");
+          ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), string);
+//          throw new UnsupportedOperationException();
 //          Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //          attr.setNodeValue(string);
 //          ((Element)currentNode).setAttributeNodeNS(attr);
@@ -1874,7 +1904,10 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          throw new UnsupportedOperationException();
+          //fixme
+          GWT.log("saveIDRefSingle");
+//          throw new UnsupportedOperationException();
+          ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), id);
 //          Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //          attr.setNodeValue(id);
 //          ((Element)currentNode).setAttributeNodeNS(attr);
@@ -1928,7 +1961,10 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          throw new UnsupportedOperationException();
+          //throw new UnsupportedOperationException();
+          ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), idsString);
+          GWT.log(currentNode.toString());
+
 //          Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //          attr.setNodeValue(idsString);
 //          ((Element)currentNode).setAttributeNodeNS(attr);
@@ -2461,7 +2497,11 @@ public class XMLSaveImpl implements XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, entryFeature);
-          throw new UnsupportedOperationException();
+          //fixme
+          ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), svalue);
+          GWT.log(currentNode.toString());
+
+//          throw new UnsupportedOperationException();
 //          Attr attr = document.createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
 //          attr.setNodeValue(svalue);
 //          ((Element)currentNode).setAttributeNodeNS(attr);
@@ -2573,7 +2613,12 @@ public class XMLSaveImpl implements XMLSave
       }
       else
       {
-        throw new UnsupportedOperationException("not yet implemented");
+        GWT.log("not yet implemented: saveElementID");
+        // fixme
+        ((Element)currentNode).setAttribute(nameInfo.getQualifiedName(), id);
+        GWT.log(currentNode.toString());
+
+//        throw new UnsupportedOperationException("not yet implemented: saveElementID");
 //        Attr attr = document.createAttributeNS(idAttributeNS, idAttributeName);
 //        attr.setNodeValue(id);
 //        ((Element)currentNode).setAttributeNodeNS(attr);
