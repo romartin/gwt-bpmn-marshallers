@@ -2,19 +2,17 @@ package org.submarine.client;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.bpmn2.util.XmlExtendedMetadata;
+import org.eclipse.emf.ecore.EPackage;
+import org.submarine.client.xmi.resource.XMLResource;
 
-public class Bpmn2Resource extends XMLResourceImpl {
+public class Bpmn2Resource extends XMLResource {
     static {
         EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
         packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);

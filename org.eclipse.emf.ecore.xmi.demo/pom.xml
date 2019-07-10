@@ -41,7 +41,7 @@
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
+    <!--<dependency>
       <groupId>org.submarine</groupId>
       <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
     </dependency>
@@ -49,7 +49,7 @@
       <groupId>org.submarine</groupId>
       <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
       <classifier>sources</classifier>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.submarine</groupId>
       <artifactId>bpmn-eclipse-models</artifactId>
@@ -100,6 +100,16 @@
       <version>1.1.8</version>
       <scope>test</scope>
     </dependency>
+
+
+
+    <!--<dependency>
+      <groupId>org.emfjson</groupId>
+      <artifactId>emfjson-gwt</artifactId>
+      &lt;!&ndash;<version>0.13.0</version>&ndash;&gt;
+      <version>0.14.0-SNAPSHOT</version>
+    </dependency>-->
+
   </dependencies>
 
   <build>

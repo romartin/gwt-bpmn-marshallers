@@ -1,8 +1,10 @@
 package org.submarine.client;
 
-import java.io.IOException;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -10,33 +12,26 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import org.eclipse.bpmn2.DocumentRoot;
-import org.eclipse.bpmn2.FlowElement;
-import org.eclipse.bpmn2.Process;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class App implements EntryPoint {
 
-    /**
-     * The message displayed to the user when the server cannot be reached or
-     * returns an error.
-     */
-    private static final String SERVER_ERROR = "An error occurred while "
-            + "attempting to contact the server. Please check your network "
-            + "connection and try again.";
+    public static BiConsumer<String, Consumer<DocumentRoot>> UNMARSHALLER = Unmarshallers.UNMARSHALLER;
+    public static BiConsumer<DocumentRoot, Consumer<String>> MARSHALLER = Unmarshallers.MARSHALLER;
 
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
-        final Button sendButton = new Button("Unmarshall");
+        final Button unmarshallButton = new Button("Unmarshall");
+        final Button marshallButton = new Button("Marshall");
         final TextArea codeField = new TextArea();
         final Label textToServerLabel = new Label();
         final HTML serverResponseLabel = new HTML();
@@ -47,12 +42,17 @@ public class App implements EntryPoint {
         final Label errorLabel = new Label();
 
         // We can add style names to widgets
-        sendButton.addStyleName("sendButton");
+        unmarshallButton.addStyleName("sendButton");
+        marshallButton.addStyleName("sendButton");
+
+        HorizontalPanel buttons = new HorizontalPanel();
+        buttons.add(unmarshallButton);
+        buttons.add(marshallButton);
 
         // Add the nameField and sendButton to the RootPanel
         // Use RootPanel.get() to get the entire body element
         RootPanel.get("nameFieldContainer").add(codeField);
-        RootPanel.get("sendButtonContainer").add(sendButton);
+        RootPanel.get("sendButtonContainer").add(buttons);
         RootPanel.get("errorLabelContainer").add(errorLabel);
         RootPanel.get("outputContainer").add(textToServerLabel);
         RootPanel.get("errorContainer").add(serverResponseLabel);
@@ -66,11 +66,14 @@ public class App implements EntryPoint {
         class MyHandler implements ClickHandler,
                                    KeyUpHandler {
 
-            /**
-             * Fired when the user clicks on the sendButton.
-             */
-            public void onClick(ClickEvent event) {
-                doUnmarshall();
+            private final BiConsumer<String, Consumer<DocumentRoot>> unmarshaller;
+            private final BiConsumer<DocumentRoot, Consumer<String>> marshaller;
+            private DocumentRoot lastRoot;
+
+            MyHandler(final BiConsumer<String, Consumer<DocumentRoot>> unmarshaller,
+                      final BiConsumer<DocumentRoot, Consumer<String>> marshaller) {
+                this.unmarshaller = unmarshaller;
+                this.marshaller = marshaller;
             }
 
             /**
@@ -83,34 +86,57 @@ public class App implements EntryPoint {
             }
 
             /**
+             * Fired when the user clicks on the sendButton.
+             */
+            public void onClick(ClickEvent event) {
+                if (null == lastRoot) {
+                    doUnmarshall();
+                } else {
+                    doMarshall();
+                }
+            }
+
+            private void doMarshall() {
+                GWT.log("Doing Marhsall");
+                marshaller.accept(lastRoot, raw -> {
+                    setResultText(raw);
+                    setLastRoot(null);
+                });
+            }
+
+            /**
              * Send the name from the nameField to the server and wait for a response.
              */
             private void doUnmarshall() {
+                GWT.log("Doing Unmarhsall");
                 // First, we validate the input.
                 errorLabel.setText("");
-                String textToServer = codeField.getText();
                 String text = codeField.getText();
 
-                Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
-                try {
-                    bpmn2Resource.load(text);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                serverResponseLabel.addStyleName("serverResponseLabelError");
+                unmarshaller.accept(text, result -> {
+                    setLastRoot(result);
+                    String resultRaw = Unmarshallers.toString(lastRoot);
 
-                DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
-                textToServerLabel.setText(String.valueOf(docRoot.getDefinitions().getRootElements().stream()
-                                                                 .filter(p -> p instanceof Process)
-                                                                 .map(p -> (Process) p)
-                                                                 .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
-                                                                 .collect(toList())));
+                    setResultText(resultRaw);
+                });
+            }
+
+            private void setLastRoot(DocumentRoot lastRoot) {
+                this.lastRoot = lastRoot;
+                marshallButton.setEnabled(null != lastRoot);
+
+            }
+            private void setResultText(String resultRaw) {
+                serverResponseLabel.addStyleName("serverResponseLabelError");
+                textToServerLabel.setText(resultRaw);
             }
         }
 
         // Add a handler to send the name to the server
-        MyHandler handler = new MyHandler();
-        sendButton.addClickHandler(handler);
+        MyHandler handler = new MyHandler(UNMARSHALLER, MARSHALLER);
+        unmarshallButton.addClickHandler(handler);
+        marshallButton.addClickHandler(handler);
+        marshallButton.setEnabled(false);
         codeField.addKeyUpHandler(handler);
     }
 
