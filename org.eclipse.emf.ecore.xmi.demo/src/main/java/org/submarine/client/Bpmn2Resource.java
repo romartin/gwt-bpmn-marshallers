@@ -1,5 +1,6 @@
 package org.submarine.client;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -35,5 +36,14 @@ public class Bpmn2Resource extends XMLResource {
         XMLParser parser = GWT.create(XMLParser.class);
         Document doc = parser.parse(contents);
         load(doc);
+    }
+
+    public String toBPMN2() throws IOException {
+        String raw = null;
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            this.save(outputStream, new HashMap<>());
+            raw = outputStream.toString("UTF-8");
+        }
+        return raw;
     }
 }

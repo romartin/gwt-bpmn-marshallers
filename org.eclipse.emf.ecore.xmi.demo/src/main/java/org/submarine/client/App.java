@@ -1,8 +1,5 @@
 package org.submarine.client;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +13,10 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.bpmn2.DocumentRoot;
 
 /**
@@ -23,15 +24,14 @@ import org.eclipse.bpmn2.DocumentRoot;
  */
 public class App implements EntryPoint {
 
-    public static BiConsumer<String, Consumer<DocumentRoot>> UNMARSHALLER = Unmarshallers.UNMARSHALLER;
-    public static BiConsumer<DocumentRoot, Consumer<String>> MARSHALLER = Unmarshallers.MARSHALLER;
-
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
         final Button unmarshallButton = new Button("Unmarshall");
         final Button marshallButton = new Button("Marshall");
+        final Button testButton = new Button("Test");
+        testButton.setVisible(false);
         final TextArea codeField = new TextArea();
         final Label textToServerLabel = new Label();
         final HTML serverResponseLabel = new HTML();
@@ -44,10 +44,12 @@ public class App implements EntryPoint {
         // We can add style names to widgets
         unmarshallButton.addStyleName("sendButton");
         marshallButton.addStyleName("sendButton");
+        testButton.addStyleName("sendButton");
 
         HorizontalPanel buttons = new HorizontalPanel();
         buttons.add(unmarshallButton);
         buttons.add(marshallButton);
+        buttons.add(testButton);
 
         // Add the nameField and sendButton to the RootPanel
         // Use RootPanel.get() to get the entire body element
@@ -66,15 +68,7 @@ public class App implements EntryPoint {
         class MyHandler implements ClickHandler,
                                    KeyUpHandler {
 
-            private final BiConsumer<String, Consumer<DocumentRoot>> unmarshaller;
-            private final BiConsumer<DocumentRoot, Consumer<String>> marshaller;
             private DocumentRoot lastRoot;
-
-            MyHandler(final BiConsumer<String, Consumer<DocumentRoot>> unmarshaller,
-                      final BiConsumer<DocumentRoot, Consumer<String>> marshaller) {
-                this.unmarshaller = unmarshaller;
-                this.marshaller = marshaller;
-            }
 
             /**
              * Fired when the user types in the nameField.
@@ -97,28 +91,25 @@ public class App implements EntryPoint {
             }
 
             private void doMarshall() {
-                GWT.log("Doing Marhsall");
-                marshaller.accept(lastRoot, raw -> {
-                    setResultText(raw);
-                    setLastRoot(null);
-                });
+                GWT.log("Doing marshall");
+                String raw = Bpmn2Marshalling.marshall(lastRoot);
+                setResultText(raw);
+                setLastRoot(null);
             }
 
             /**
              * Send the name from the nameField to the server and wait for a response.
              */
             private void doUnmarshall() {
-                GWT.log("Doing Unmarhsall");
+                GWT.log("Doing Unmarshall");
                 // First, we validate the input.
                 errorLabel.setText("");
                 String text = codeField.getText();
-
-                unmarshaller.accept(text, result -> {
-                    setLastRoot(result);
-                    String resultRaw = Unmarshallers.toString(lastRoot);
-
-                    setResultText(resultRaw);
-                });
+                // Unmarshall.
+                DocumentRoot result = Bpmn2Marshalling.unmarshall(text);
+                setLastRoot(result);
+                String resultRaw = Bpmn2Marshalling.testString(lastRoot);
+                setResultText(resultRaw);
             }
 
             private void setLastRoot(DocumentRoot lastRoot) {
@@ -127,17 +118,40 @@ public class App implements EntryPoint {
 
             }
             private void setResultText(String resultRaw) {
+                GWT.log("*** RESULT START ***");
+                GWT.log(resultRaw);
+                GWT.log("*** RESULT END ***");
                 serverResponseLabel.addStyleName("serverResponseLabelError");
                 textToServerLabel.setText(resultRaw);
             }
         }
 
         // Add a handler to send the name to the server
-        MyHandler handler = new MyHandler(UNMARSHALLER, MARSHALLER);
+        MyHandler handler = new MyHandler();
         unmarshallButton.addClickHandler(handler);
         marshallButton.addClickHandler(handler);
         marshallButton.setEnabled(false);
+        testButton.addClickHandler(event -> onTestButtonClick());
         codeField.addKeyUpHandler(handler);
+    }
+
+    private void onTestButtonClick() {
+
+        Document document = XMLParser.createDocument();
+
+        Element definitions = document.createElement("bpmn2:definitions");
+        document.appendChild(definitions);
+
+        Node itemDefinition1 = document.createElement("bpmn2:itemDefinition");
+        itemDefinition1.setNodeValue("itemDefinition1_value");
+        definitions.appendChild(itemDefinition1);
+
+        Element itemDefinition2 = document.createElement("bpmn2:itemDefinition");
+        itemDefinition2.setAttribute("id", "itemDefinition2_id");
+        definitions.appendChild(itemDefinition2);
+
+        String raw = document.toString();
+        GWT.log(raw);
     }
 
     private static final String TEXT =

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
 
+import com.google.gwt.core.client.GWT;
 import org.eclipse.emf.common.util.Callback;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.submarine.client.xmi.util.StreamHelper;
@@ -32,10 +33,11 @@ public abstract class AbstractMapper implements Mapper {
 
 	public void write(Resource resource, OutputStream stream, Map<?, ?> options) {
 		try {
-			String value = write(resource, options);
-			stream.write(value.getBytes());
+			final String value = write(resource, options);
+			final byte[] bytes = value.getBytes();
+			stream.write(bytes, 0, bytes.length);
 		} catch (IOException e) {
-			e.printStackTrace();
+			GWT.log("Error while writing to the output stream: [" + e.getMessage() + "]");
 		}
 	}
 

@@ -17,6 +17,7 @@
 package org.submarine.client.xmi.resource;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.TreeMap;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -31,9 +33,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.submarine.client.xmi.map.XmlMapper;
 import org.submarine.client.xmi.resource.xml.XMLDOMHandler;
 import org.submarine.client.xmi.resource.xml.XMLHelper;
 import org.submarine.client.xmi.resource.xml.XMLLoad;
+import org.submarine.client.xmi.resource.xml.XMLSave;
 
 /**
  * This class implements the XMLResource interface. It overloads the
@@ -42,6 +46,7 @@ import org.submarine.client.xmi.resource.xml.XMLLoad;
  */
 public class XMLResource extends ResourceImpl
 {
+  public static final String OPTION_ELEMENT_HANDLER = "ELEMENT_HANDLER";
 
   public static String OPTION_USE_PARSER_POOL = "USE_PARSER_POOL";
 
@@ -222,7 +227,7 @@ public class XMLResource extends ResourceImpl
   {
     if (defaultSaveOptions == null)
     {
-      defaultSaveOptions = new HashMap<Object, Object>();
+      defaultSaveOptions = new HashMap<>();
     }
     return defaultSaveOptions;
   }
@@ -231,7 +236,7 @@ public class XMLResource extends ResourceImpl
   {
     if (defaultLoadOptions == null)
     {
-      defaultLoadOptions = new HashMap<Object, Object>();
+      defaultLoadOptions = new HashMap<>();
     }
     return defaultLoadOptions;
   }
@@ -246,23 +251,18 @@ public class XMLResource extends ResourceImpl
     return new XMLLoad(createXMLHelper());
   }
 
-  /*
-  TODO
   protected XMLSave createXMLSave()
   {
-    return new XMLSaveImpl(createXMLHelper());
+    return new XMLSave(createXMLHelper());
   }
-  */
 
   public Document save(Document doc, Map<?, ?> options, XMLDOMHandler handler)
   {
-    // TODO
-    throw new UnsupportedOperationException();
-    /*XMLSave xmlSave = createXMLSave();
+    XMLSave xmlSave = createXMLSave();
     xmlDOMHandler = handler;
     if (xmlDOMHandler == null)
     {
-      xmlDOMHandler = new DefaultDOMHandlerImpl();
+      xmlDOMHandler = new XMLDOMHandler();
     }
     Document document = doc;
     if (document == null)
@@ -289,7 +289,7 @@ public class XMLResource extends ResourceImpl
       Map<Object,Object> mergedOptions = new HashMap<Object, Object>(defaultSaveOptions);
       mergedOptions.putAll(options);
       return xmlSave.save(this, document, mergedOptions, xmlDOMHandler);
-    }*/
+    }
   }
   
   @Override
@@ -609,4 +609,16 @@ public class XMLResource extends ResourceImpl
     xmlLoad.load(this, node, options); 
   }
 
+  @Override
+  protected void doSave(OutputStream outputStream, Map<?, ?> options) throws IOException {
+    //super.doSave(outputStream, options);
+
+    if (options == null) {
+      options = Collections.<String, Object>emptyMap();
+    }
+
+    XmlMapper xmlMapper = new XmlMapper();
+    xmlMapper.write(this, outputStream, options);
+
+  }
 }
