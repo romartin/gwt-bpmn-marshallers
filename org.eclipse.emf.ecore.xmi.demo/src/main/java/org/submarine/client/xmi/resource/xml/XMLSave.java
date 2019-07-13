@@ -1088,7 +1088,7 @@ public class XMLSave
     else
     {
       helper.populateNameInfo(nameInfo, eClass);
-      getGwtDOMHandler().setAttributeNS(currentNode, XMLResource.XSI_URI, XSI_TYPE_NS, nameInfo.getQualifiedName());
+      getGwtDOMHandler().setAttributeNS(currentNode, ExtendedMetaData.XSI_URI, XSI_TYPE_NS, nameInfo.getQualifiedName());
     }
     
   }
@@ -1590,7 +1590,9 @@ public class XMLSave
       else
       {
         helper.populateNameInfo(nameInfo, f);
-        Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), svalue);
+        Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+        attr.setNodeValue(svalue);
+        getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
         handler.recordValues(attr, o, f, value);
       }
     }
@@ -1638,7 +1640,8 @@ public class XMLSave
     else
     {
       helper.populateNameInfo(nameInfo, f);
-      Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), "");
+      Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+      getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
       handler.recordValues(attr, o, f, null);
     }
   }
@@ -1751,7 +1754,9 @@ public class XMLSave
       {
         helper.populateNameInfo(nameInfo, f);
         String  value = stringValues.toString();
-        Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), value);
+        Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+        attr.setNodeValue(value);
+        getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
         handler.recordValues(attr, o, f, value);
       }
     }
@@ -1788,7 +1793,9 @@ public class XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), buffer.toString());
+          Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+          attr.setNodeValue(buffer.toString());
+          getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
           handler.recordValues(attr, o, f, value);
         }
       }
@@ -1853,7 +1860,9 @@ public class XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), string);
+          Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+          attr.setNodeValue(string);
+          getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
           handler.recordValues(attr, o, f, values);
         }
       }
@@ -1876,7 +1885,9 @@ public class XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), id);
+          Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+          attr.setNodeValue(id);
+          getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
           handler.recordValues(attr, o, f, value);
         }    
       }
@@ -1927,7 +1938,9 @@ public class XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, f);
-          Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), idsString);
+          Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+          attr.setNodeValue(idsString);
+          getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
           handler.recordValues(attr, o, f, values);
         }
       }
@@ -2457,7 +2470,9 @@ public class XMLSave
         else
         {
           helper.populateNameInfo(nameInfo, entryFeature);
-          Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, nameInfo.getNamespaceURI(), nameInfo.getQualifiedName(), svalue);
+          Attr attr = getGwtDOMHandler().createAttributeNS(nameInfo.getNamespaceURI(), nameInfo.getQualifiedName());
+          attr.setNodeValue(svalue);
+          getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
           handler.recordValues(attr, o, f, value);
         }
       }
@@ -2566,7 +2581,9 @@ public class XMLSave
       }
       else
       {
-        Attr attr = getGwtDOMHandler().setAttributeNS(currentNode, idAttributeNS, idAttributeName, id);
+        Attr attr = getGwtDOMHandler().createAttributeNS(idAttributeNS, idAttributeName);
+        attr.setNodeValue(id);
+        getGwtDOMHandler().setAttributeNodeNS(currentNode, attr);
         handler.recordValues(attr, o, null, o);
       }
     }

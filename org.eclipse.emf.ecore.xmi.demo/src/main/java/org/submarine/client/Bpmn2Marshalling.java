@@ -1,6 +1,7 @@
 package org.submarine.client;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import org.eclipse.bpmn2.DocumentRoot;
@@ -34,12 +35,17 @@ public class Bpmn2Marshalling {
         return raw;
     }
 
+    public static Process getProcess(DocumentRoot docRoot) {
+        return (Process) docRoot.getDefinitions().getRootElements().stream()
+                .filter(p -> p instanceof Process)
+                .findAny()
+                .get();
+    }
+
     public static String testString(DocumentRoot docRoot) {
-        String result = (String.valueOf(docRoot.getDefinitions().getRootElements().stream()
-                                                .filter(p -> p instanceof Process)
-                                                .map(p -> (Process) p)
-                                                .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
-                                                .collect(toList())));
+        Process process = getProcess(docRoot);
+        List<Class<?>> flowElementClasses = process.getFlowElements().stream().map(FlowElement::getClass).collect(toList());
+        String result = (String.valueOf(flowElementClasses));
         return result;
     }
 

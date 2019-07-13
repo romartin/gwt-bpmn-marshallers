@@ -4,7 +4,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
@@ -35,7 +34,8 @@ public class App implements EntryPoint {
         final TextArea codeField = new TextArea();
         final Label textToServerLabel = new Label();
         final HTML serverResponseLabel = new HTML();
-        codeField.setText(TEXT);
+        //codeField.setText(TEXT);
+        codeField.setText(SIMPLE_PROCESS);
         codeField.setWidth("90%");
         codeField.setVisibleLines(20);
 
@@ -74,9 +74,9 @@ public class App implements EntryPoint {
              * Fired when the user types in the nameField.
              */
             public void onKeyUp(KeyUpEvent event) {
-                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                /*if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
                     doUnmarshall();
-                }
+                }*/
             }
 
             /**
@@ -153,6 +153,39 @@ public class App implements EntryPoint {
         String raw = document.toString();
         GWT.log(raw);
     }
+
+
+    private static final String SIMPLE_PROCESS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<bpmn2:definitions xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.omg.org/bpmn20\" xmlns:bpmn2=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:bpsim=\"http://www.bpsim.org/schemas/1.0\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:drools=\"http://www.jboss.org/drools\" id=\"_GUUj8KUCEemjtN0xRqbezg\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd \" exporter=\"jBPM Process Modeler\" exporterVersion=\"2.0\" targetNamespace=\"http://www.omg.org/bpmn20\">\n" +
+            "  <bpmn2:process id=\"test.process1\" drools:packageName=\"com.myspace.test\" drools:version=\"1.0\" drools:adHoc=\"false\" name=\"process1\" isExecutable=\"true\">\n" +
+            "    <bpmn2:startEvent id=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\"/>\n" +
+            "  </bpmn2:process>\n" +
+            "  <bpmndi:BPMNDiagram id=\"_GUUj8aUCEemjtN0xRqbezg\">\n" +
+            "    <bpmndi:BPMNPlane id=\"_GUUj8qUCEemjtN0xRqbezg\" bpmnElement=\"test.process1\">\n" +
+            "      <bpmndi:BPMNShape id=\"shape__B801DDDE-29E9-41C2-BF36-0045EA55F573\" bpmnElement=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\">\n" +
+            "        <dc:Bounds height=\"56.0\" width=\"56.0\" x=\"100.0\" y=\"100.0\"/>\n" +
+            "      </bpmndi:BPMNShape>\n" +
+            "    </bpmndi:BPMNPlane>\n" +
+            "  </bpmndi:BPMNDiagram>\n" +
+            "  <bpmn2:relationship id=\"_GUUj86UCEemjtN0xRqbezg\" type=\"BPSimData\">\n" +
+            "    <bpmn2:extensionElements>\n" +
+            "      <bpsim:BPSimData>\n" +
+            "        <bpsim:Scenario xsi:type=\"bpsim:Scenario\" id=\"default\" name=\"Simulationscenario\">\n" +
+            "          <bpsim:ScenarioParameters xsi:type=\"bpsim:ScenarioParameters\"/>\n" +
+            "          <bpsim:ElementParameters xsi:type=\"bpsim:ElementParameters\" elementRef=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\" id=\"_GUUj9KUCEemjtN0xRqbezg\">\n" +
+            "            <bpsim:TimeParameters xsi:type=\"bpsim:TimeParameters\">\n" +
+            "              <bpsim:ProcessingTime xsi:type=\"bpsim:Parameter\">\n" +
+            "                <bpsim:NormalDistribution mean=\"0.0\" standardDeviation=\"0.0\"/>\n" +
+            "              </bpsim:ProcessingTime>\n" +
+            "            </bpsim:TimeParameters>\n" +
+            "          </bpsim:ElementParameters>\n" +
+            "        </bpsim:Scenario>\n" +
+            "      </bpsim:BPSimData>\n" +
+            "    </bpmn2:extensionElements>\n" +
+            "    <bpmn2:source>_GUUj8KUCEemjtN0xRqbezg</bpmn2:source>\n" +
+            "    <bpmn2:target>_GUUj8KUCEemjtN0xRqbezg</bpmn2:target>\n" +
+            "  </bpmn2:relationship>\n" +
+            "</bpmn2:definitions>";
 
     private static final String TEXT =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
