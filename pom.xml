@@ -24,9 +24,42 @@
 
   </properties>
 
+  <repositories>
+    <repository>
+      <!-- Duplicating the Maven Central repository here (as it is already coming from Super POM) makes the build much faster,
+           as the Maven Central is now treated as the first (default) repository (because it is before the JBoss.org one).
+           Artifacts with release (fixed) versions are being downloaded primarily from there. Without the central being the
+           first repository the JBoss.org Nexus would be contacted first and since it is quite slow it slows down the build.
+           We use JBoss.org repo only to download our SNAPSHOTs. -->
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <layout>default</layout>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
+    <!-- Conventions are described in http://community.jboss.org/wiki/MavenGettingStarted-Developers -->
+    <repository>
+      <id>jboss-public-repository-group</id>
+      <name>JBoss Public Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
   <modules>
-    <module>org.eclipse.emf.ecore.xmi</module>
-    <module>bpmn-eclipse-models</module>
+    <!--<module>org.eclipse.emf.ecore.xmi</module>
+    <module>bpmn-eclipse-models</module>-->
+    <module>bpmn2-emf</module>
     <module>org.eclipse.emf.ecore.xmi.demo</module>
   </modules>
 
@@ -51,82 +84,41 @@
         <version>1.0-SNAPSHOT</version>
         <classifier>sources</classifier>
       </dependency>
+      <dependency>
+        <groupId>org.eclipselabs</groupId>
+        <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
+        <version>2.9.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipselabs</groupId>
+        <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
+        <version>2.9.0</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipselabs</groupId>
+        <artifactId>org.eclipse.emf.gwt.common</artifactId>
+        <version>2.9.0</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipselabs</groupId>
+        <artifactId>org.eclipse.emf.gwt.common</artifactId>
+        <version>2.9.0</version>
+        <classifier>sources</classifier>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt.gwtmockito</groupId>
+        <artifactId>gwtmockito</artifactId>
+        <version>1.1.8</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.eclipselabs</groupId>
-      <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
-      <version>2.9.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-servlet</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <!-- Output classes directly into the webapp, so that IDEs and "mvn process-classes" update them in DevMode -->
-    <!--    <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/classes</outputDirectory>-->
-    <outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-    <finalName>${project.artifactId}</finalName>
-
-    <plugins>
-      <!-- GWT Maven Plugin-->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>gwt-maven-plugin</artifactId>
-        <version>2.8.2</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>compile</goal>
-              <goal>generateAsync</goal>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>        <configuration>
-          <module>org.submarine.App</module>
-          <style>PRETTY</style>
-          <compileReport>true</compileReport>
-          <soycDetailed>true</soycDetailed>
-          <logLevel>INFO</logLevel>
-          <noServer>false</noServer>
-          <superDevMode>true</superDevMode>
-          <runTarget>App.html</runTarget>
-          <hostedWebapp>src/main/webapp</hostedWebapp>
-          <workDir>${project.build.directory}</workDir>
-        </configuration>
-      </plugin>
-
-      <!-- Skip normal test execution, we use gwt:test instead -->
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.17</version>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-
-    </plugins>
-  </build>
 </project>

@@ -8,6 +8,7 @@
     <groupId>org.submarine</groupId>
     <artifactId>org.eclipse.emf.ecore.xmi.parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <artifactId>org.eclipse.emf.ecore.xmi.demo</artifactId>
   <packaging>war</packaging>
@@ -41,7 +42,46 @@
   </dependencyManagement>
 
   <dependencies>
+
     <dependency>
+      <groupId>org.submarine</groupId>
+      <artifactId>bpmn2-emf</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.submarine</groupId>
+      <artifactId>bpmn2-emf</artifactId>
+      <version>${project.version}</version>
+      <classifier>sources</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipselabs</groupId>
+      <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipselabs</groupId>
+      <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
+      <classifier>sources</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipselabs</groupId>
+      <artifactId>org.eclipse.emf.gwt.common</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.eclipselabs</groupId>
+      <artifactId>org.eclipse.emf.gwt.common</artifactId>
+      <classifier>sources</classifier>
+    </dependency>
+
+   <!-- <dependency>
       <groupId>org.submarine</groupId>
       <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
     </dependency>
@@ -65,7 +105,7 @@
       <groupId>org.eclipselabs</groupId>
       <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
       <version>2.9.0</version>
-    </dependency>
+    </dependency>-->
     <!--    <dependency>-->
     <!--      <groupId>org.eclipselabs</groupId>-->
     <!--      <artifactId>org.eclipse.emf.gwt.ecore</artifactId>-->
@@ -91,13 +131,11 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.gwt.gwtmockito</groupId>
       <artifactId>gwtmockito</artifactId>
-      <version>1.1.8</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

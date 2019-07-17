@@ -1,7 +1,5 @@
 package org.submarine.client;
 
-import java.io.IOException;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -13,11 +11,6 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
-import org.eclipse.bpmn2.DocumentRoot;
-import org.eclipse.bpmn2.FlowElement;
-import org.eclipse.bpmn2.Process;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -91,7 +84,7 @@ public class App implements EntryPoint {
                 String textToServer = codeField.getText();
                 String text = codeField.getText();
 
-                Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
+                /*Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
                 try {
                     bpmn2Resource.load(text);
                 } catch (IOException e) {
@@ -104,7 +97,7 @@ public class App implements EntryPoint {
                                                                  .filter(p -> p instanceof Process)
                                                                  .map(p -> (Process) p)
                                                                  .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
-                                                                 .collect(toList())));
+                                                                 .collect(toList())));*/
             }
         }
 
