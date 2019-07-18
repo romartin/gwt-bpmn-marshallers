@@ -11,9 +11,10 @@
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
   <!--<inherits name='org.eclipse.emf.ecore.Ecore'/>
   <inherits name='org.eclipse.emf.ecore.xmi.Xmi'/>
-  <inherits name='org.eclipse.Bpmn2'/>-->
+  <inherits name='org.eclipse.Bpmn2'/>
+  <inherits name='org.eclipse.emf.common.EMFCommon'/>-->
 
-  <inherits name='org.eclipse.emf.common.EMFCommon'/>
+  <inherits name='org.eclipse.jBpmBpmn2'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.submarine.client.App'/>
@@ -21,10 +22,9 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
-  <super-source path="compat"/>
 
   <set-property name="compiler.useSourceMaps" value="true"/>
-  <set-property name="user.agent" value="safari" />
+  <set-property name="user.agent" value="gecko1_8,safari" />
 
 <!--  &lt;!&ndash; allow Super Dev Mode &ndash;&gt;-->
 <!--  <add-linker name="xsiframe"/>-->
