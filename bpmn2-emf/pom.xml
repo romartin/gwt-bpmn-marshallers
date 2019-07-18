@@ -102,7 +102,29 @@
   </dependencies>
 
   <build>
+
     <plugins>
+
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <configuration>
+          <failOnError>false</failOnError>
+          <filesets>
+            <fileset>
+              <directory>${basedir}</directory>
+              <includes>
+                <include>**/gwt-unitCache/**</include>
+                <include>.gwt/**</include>
+                <include>META-INF/</include>
+                <include>build.properties/</include>
+                <include>plugin.properties/</include>
+                <include>plugin.xml/</include>
+              </includes>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
@@ -115,7 +137,9 @@
           </execution>
         </executions>
       </plugin>
+
     </plugins>
+
   </build>
 
 </project>

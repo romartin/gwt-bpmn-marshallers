@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="&lt;copyright>&#xD;&#xA;&#xD;&#xA;Copyright (c) 2010 SAP AG.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Reiner Hille-Doering (SAP AG) - initial API and implementation and/or initial documentation&#xD;&#xA;&#xD;&#xA;&lt;/copyright>"
-    modelDirectory="/org.eclipse.bpmn2/src" creationIcons="false" modelPluginID="org.eclipse.bpmn2"
+    modelDirectory="/bpmn2-emf/src/main/java" creationIcons="false" modelPluginID="org.eclipse.bpmn2"
     templateDirectory="org.eclipse.bpmn2/templates" dynamicTemplates="true" modelName="Bpmn2"
     modelPluginClass="" suppressEMFTypes="true" codeFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.4" language="en">
@@ -225,8 +225,8 @@
     </genClasses>
     <genClasses ecoreClass="BPMN20.ecore#//Auditing"/>
     <genClasses image="false" ecoreClass="BPMN20.ecore#//BaseElement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//BaseElement/extensionValues"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//BaseElement/documentation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//BaseElement/extensionValues"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//BaseElement/extensionDefinitions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//BaseElement/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute BPMN20.ecore#//BaseElement/anyAttribute"/>
@@ -766,7 +766,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//UserTask/implementation"/>
     </genClasses>
     <genClasses ecoreClass="BPMN20.ecore#//EventSubprocess"/>
-    <genClasses image="false" ecoreClass="BPMN20.ecore#//Annotation"/>
   </genPackages>
   <genPackages prefix="BpmnDi" basePackage="org.eclipse.bpmn2" resource="XML" multipleEditorPages="false"
       generateModelWizard="false" ecorePackage="BPMNDI.ecore#/">
