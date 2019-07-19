@@ -1,51 +1,55 @@
 package org.submarine.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
+import com.google.gwt.xml.client.Document;
+import com.google.gwt.xml.client.Element;
+import com.google.gwt.xml.client.Node;
+import com.google.gwt.xml.client.XMLParser;
+import org.eclipse.bpmn2.DocumentRoot;
+import org.eclipse.jbpm.Bpmn2Marshalling;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
 public class App implements EntryPoint {
 
-    /**
-     * The message displayed to the user when the server cannot be reached or
-     * returns an error.
-     */
-    private static final String SERVER_ERROR = "An error occurred while "
-            + "attempting to contact the server. Please check your network "
-            + "connection and try again.";
-
-    /**
-     * This is the entry point method.
-     */
     public void onModuleLoad() {
-        final Button sendButton = new Button("Unmarshall");
+        final Button unmarshallButton = new Button("Unmarshall");
+        final Button marshallButton = new Button("Marshall");
+        final Button testButton = new Button("Test");
+        testButton.setVisible(false);
         final TextArea codeField = new TextArea();
         final Label textToServerLabel = new Label();
         final HTML serverResponseLabel = new HTML();
-        codeField.setText(TEXT);
+        //codeField.setText(TEXT);
+        codeField.setText(SIMPLE_PROCESS);
         codeField.setWidth("90%");
         codeField.setVisibleLines(20);
 
         final Label errorLabel = new Label();
 
         // We can add style names to widgets
-        sendButton.addStyleName("sendButton");
+        unmarshallButton.addStyleName("sendButton");
+        marshallButton.addStyleName("sendButton");
+        testButton.addStyleName("sendButton");
+
+        HorizontalPanel buttons = new HorizontalPanel();
+        buttons.add(unmarshallButton);
+        buttons.add(marshallButton);
+        buttons.add(testButton);
 
         // Add the nameField and sendButton to the RootPanel
         // Use RootPanel.get() to get the entire body element
         RootPanel.get("nameFieldContainer").add(codeField);
-        RootPanel.get("sendButtonContainer").add(sendButton);
+        RootPanel.get("sendButtonContainer").add(buttons);
         RootPanel.get("errorLabelContainer").add(errorLabel);
         RootPanel.get("outputContainer").add(textToServerLabel);
         RootPanel.get("errorContainer").add(serverResponseLabel);
@@ -59,53 +63,124 @@ public class App implements EntryPoint {
         class MyHandler implements ClickHandler,
                                    KeyUpHandler {
 
-            /**
-             * Fired when the user clicks on the sendButton.
-             */
-            public void onClick(ClickEvent event) {
-                doUnmarshall();
-            }
+            private DocumentRoot lastRoot;
 
             /**
              * Fired when the user types in the nameField.
              */
             public void onKeyUp(KeyUpEvent event) {
-                if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+                /*if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
                     doUnmarshall();
+                }*/
+            }
+
+            /**
+             * Fired when the user clicks on the sendButton.
+             */
+            public void onClick(ClickEvent event) {
+                if (null == lastRoot) {
+                    doUnmarshall();
+                } else {
+                    doMarshall();
                 }
+            }
+
+            private void doMarshall() {
+                GWT.log("Doing marshall");
+                String raw = Bpmn2Marshalling.marshall(lastRoot);
+                setResultText(raw);
+                setLastRoot(null);
             }
 
             /**
              * Send the name from the nameField to the server and wait for a response.
              */
             private void doUnmarshall() {
+                GWT.log("Doing Unmarshall");
                 // First, we validate the input.
                 errorLabel.setText("");
-                String textToServer = codeField.getText();
                 String text = codeField.getText();
+                // Unmarshall.
+                DocumentRoot result = Bpmn2Marshalling.unmarshall(text);
+                setLastRoot(result);
+                String resultRaw = Bpmn2Marshalling.testString(lastRoot);
+                setResultText(resultRaw);
+            }
 
-                /*Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
-                try {
-                    bpmn2Resource.load(text);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            private void setLastRoot(DocumentRoot lastRoot) {
+                this.lastRoot = lastRoot;
+                marshallButton.setEnabled(null != lastRoot);
+
+            }
+            private void setResultText(String resultRaw) {
+                GWT.log("*** RESULT START ***");
+                GWT.log(resultRaw);
+                GWT.log("*** RESULT END ***");
                 serverResponseLabel.addStyleName("serverResponseLabelError");
-
-                DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
-                textToServerLabel.setText(String.valueOf(docRoot.getDefinitions().getRootElements().stream()
-                                                                 .filter(p -> p instanceof Process)
-                                                                 .map(p -> (Process) p)
-                                                                 .flatMap(p -> p.getFlowElements().stream().map(FlowElement::getClass))
-                                                                 .collect(toList())));*/
+                textToServerLabel.setText(resultRaw);
             }
         }
 
         // Add a handler to send the name to the server
         MyHandler handler = new MyHandler();
-        sendButton.addClickHandler(handler);
+        unmarshallButton.addClickHandler(handler);
+        marshallButton.addClickHandler(handler);
+        marshallButton.setEnabled(false);
+        testButton.addClickHandler(event -> onTestButtonClick());
         codeField.addKeyUpHandler(handler);
     }
+
+    private void onTestButtonClick() {
+
+        Document document = XMLParser.createDocument();
+
+        Element definitions = document.createElement("bpmn2:definitions");
+        document.appendChild(definitions);
+
+        Node itemDefinition1 = document.createElement("bpmn2:itemDefinition");
+        itemDefinition1.setNodeValue("itemDefinition1_value");
+        definitions.appendChild(itemDefinition1);
+
+        Element itemDefinition2 = document.createElement("bpmn2:itemDefinition");
+        itemDefinition2.setAttribute("id", "itemDefinition2_id");
+        definitions.appendChild(itemDefinition2);
+
+        String raw = document.toString();
+        GWT.log(raw);
+    }
+
+
+    private static final String SIMPLE_PROCESS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+            "<bpmn2:definitions xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.omg.org/bpmn20\" xmlns:bpmn2=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:bpsim=\"http://www.bpsim.org/schemas/1.0\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:drools=\"http://www.jboss.org/drools\" id=\"_GUUj8KUCEemjtN0xRqbezg\" xsi:schemaLocation=\"http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd http://www.omg.org/spec/DD/20100524/DC DC.xsd http://www.omg.org/spec/DD/20100524/DI DI.xsd \" exporter=\"jBPM Process Modeler\" exporterVersion=\"2.0\" targetNamespace=\"http://www.omg.org/bpmn20\">\n" +
+            "  <bpmn2:process id=\"test.process1\" drools:packageName=\"com.myspace.test\" drools:version=\"1.0\" drools:adHoc=\"false\" name=\"process1\" isExecutable=\"true\">\n" +
+            "    <bpmn2:startEvent id=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\"/>\n" +
+            "  </bpmn2:process>\n" +
+            "  <bpmndi:BPMNDiagram id=\"_GUUj8aUCEemjtN0xRqbezg\">\n" +
+            "    <bpmndi:BPMNPlane id=\"_GUUj8qUCEemjtN0xRqbezg\" bpmnElement=\"test.process1\">\n" +
+            "      <bpmndi:BPMNShape id=\"shape__B801DDDE-29E9-41C2-BF36-0045EA55F573\" bpmnElement=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\">\n" +
+            "        <dc:Bounds height=\"56.0\" width=\"56.0\" x=\"100.0\" y=\"100.0\"/>\n" +
+            "      </bpmndi:BPMNShape>\n" +
+            "    </bpmndi:BPMNPlane>\n" +
+            "  </bpmndi:BPMNDiagram>\n" +
+            "  <bpmn2:relationship id=\"_GUUj86UCEemjtN0xRqbezg\" type=\"BPSimData\">\n" +
+            "    <bpmn2:extensionElements>\n" +
+            "      <bpsim:BPSimData>\n" +
+            "        <bpsim:Scenario xsi:type=\"bpsim:Scenario\" id=\"default\" name=\"Simulationscenario\">\n" +
+            "          <bpsim:ScenarioParameters xsi:type=\"bpsim:ScenarioParameters\"/>\n" +
+            "          <bpsim:ElementParameters xsi:type=\"bpsim:ElementParameters\" elementRef=\"_B801DDDE-29E9-41C2-BF36-0045EA55F573\" id=\"_GUUj9KUCEemjtN0xRqbezg\">\n" +
+            "            <bpsim:TimeParameters xsi:type=\"bpsim:TimeParameters\">\n" +
+            "              <bpsim:ProcessingTime xsi:type=\"bpsim:Parameter\">\n" +
+            "                <bpsim:NormalDistribution mean=\"0.0\" standardDeviation=\"0.0\"/>\n" +
+            "              </bpsim:ProcessingTime>\n" +
+            "            </bpsim:TimeParameters>\n" +
+            "          </bpsim:ElementParameters>\n" +
+            "        </bpsim:Scenario>\n" +
+            "      </bpsim:BPSimData>\n" +
+            "    </bpmn2:extensionElements>\n" +
+            "    <bpmn2:source>_GUUj8KUCEemjtN0xRqbezg</bpmn2:source>\n" +
+            "    <bpmn2:target>_GUUj8KUCEemjtN0xRqbezg</bpmn2:target>\n" +
+            "  </bpmn2:relationship>\n" +
+            "</bpmn2:definitions>";
 
     private static final String TEXT =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -358,63 +433,3 @@ public class App implements EntryPoint {
                     "  </bpmn2:relationship>\n" +
                     "</bpmn2:definitions>";
 }
-
-/*
-        if (namespaceAware)
-        {
-          for (int i = 0, length = attributes.getLength(); i < length; i++)
-          {
-            Node attr = attributes.item(i);
-            String namespaceURI = attr.getNamespaceURI();
-            if (ExtendedMetaData.XMLNS_URI.equals(namespaceURI))
-            {
-              handler.startPrefixMapping(attr.getLocalName(), attr.getNodeValue());
-              if (filteredAttributes == null)
-              {
-                filteredAttributes = new AttributesImpl();
-                for (int j = 0; j < i; ++j)
-                {
-                  attr = attributes.item(j);
-                  namespaceURI = attr.getNamespaceURI();
-                  if (namespaceURI == null)
-                  {
-                    namespaceURI = "";
-                  }
-                  filteredAttributes.addAttribute(namespaceURI, attr.getLocalName(), attr.getNodeName(), "CDATA", attr.getNodeValue());
-                }
-              }
-            }
-            else if (filteredAttributes != null)
-            {
-              if (namespaceURI == null)
-              {
-                namespaceURI = "";
-              }
-              filteredAttributes.addAttribute(namespaceURI, attr.getLocalName(), attr.getNodeName(), "CDATA", attr.getNodeValue());
-            }
-          }
-        }
-        if (filteredAttributes == null)
-        {
-          attributesProxy.setAttributes(attributes);
-        }
-        String namespaceURI = node.getNamespaceURI();
-        if (namespaceURI == null)
-        {
-          namespaceURI = "";
-        }
-        String localName = node.getLocalName();
-        String qname = node.getNodeName();
-
-        handler.startElement(namespaceURI, localName, qname, filteredAttributes == null ? attributesProxy: filteredAttributes);
-
-        Node child = node.getFirstChild();
-        while (child != null)
-        {
-          traverse(child, attributesProxy, handler, lexicalHandler);
-          child = child.getNextSibling();
-        }
-        handler.endElement(namespaceURI, localName, qname);
-        break;
-}
- */

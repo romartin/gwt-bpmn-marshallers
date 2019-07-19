@@ -2,12 +2,13 @@
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.8.2//EN" "http://gwtproject.org/doctype/2.8.2/gwt-module.dtd">
 <module>
 
-  <inherits name='com.google.gwt.user.User'/>
   <inherits name="com.google.gwt.xml.XML" />
-  <inherits name='org.eclipse.emf.ecore.Ecore'/>
-  <inherits name="org.eclipse.emul.jBpmEmfEmulation"/>
+  <inherits name="org.eclipse.emul.jBpmEclipseEmulation"/>
+  <inherits name="org.eclipse.emf.ecore.Ecore"/>
 
-  <source path='bpmn2'/>
-  <source path='dd'/>
+  <source path="bpmn2"/>
+  <source path="dd"/>
+  <source path="emf.ecore.xmi"/>
+  <source path="jbpm"/>
 
 </module>

@@ -14,7 +14,7 @@
   <inherits name='org.eclipse.Bpmn2'/>
   <inherits name='org.eclipse.emf.common.EMFCommon'/>-->
 
-  <inherits name='org.eclipse.jBpmBpmn2'/>
+  <inherits name='org.eclipse.jBpmEmfBpmn2'/>
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.submarine.client.App'/>
