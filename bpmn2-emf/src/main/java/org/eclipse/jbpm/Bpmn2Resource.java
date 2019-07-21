@@ -23,7 +23,7 @@ public class Bpmn2Resource extends XMLResourceImpl {
     public void load(Node node) throws IOException {
         HashMap<Object, Object> options = new HashMap<>();
 //                options.put(XMLResource.OPTION_DOM_USE_NAMESPACES_IN_SCOPE, true);
-        // TODO: options.put(XMLResource.OPTION_EXTENDED_META_DATA, new XmlExtendedMetadata());
+        options.put(XMLResource.OPTION_EXTENDED_META_DATA, new XmlExtendedMetadata());
         options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
         options.put(XMLResource.OPTION_DISABLE_NOTIFY, true);
         options.put(XMLResource.OPTION_PROCESS_DANGLING_HREF,

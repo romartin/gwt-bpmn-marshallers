@@ -28,12 +28,6 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.eclipse</groupId>
-      <artifactId>org.eclipse.bpmn2</artifactId>
-      <version>0.8.2-jboss</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.eclipselabs</groupId>
       <artifactId>org.eclipse.emf.gwt.ecore</artifactId>
       <scope>provided</scope>
