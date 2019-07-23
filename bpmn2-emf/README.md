@@ -21,12 +21,18 @@ kogito (so this new module)
 
 TODO
 ----
-* Addd ecore etc into repo
+* Qs
+    * What about "old" tiho/bpmn2 plugins stuff? Dropping support for eclipse editors?
+    * What about stunner 7.x vs kogito marshallers? Use only client stuff or keep different 2 impls?
+
+* Next
+    * Initialize resources via factory (BpsimFactoryImpl, DroolsFactoryImpl, Bpmn2FactoryImpl, etc)
+    * Add support for drools & bpsim namespaces too (jbpm-bpmn2-emfextmodel)
+    * Reduce generated models (GWT) to min state as much as possible
+    * xmi
+        * Reduce amount of code used for xmi stuff
+        * Refactor code impls  
+
 * Instead of copying generated sources, use some mvn plugin to generate classes from ecore etc
 * Check // TODO (kogito) - Roger
 
-* Ed's Qs
-** how did you generated the bpmn-eclipse-models?
-** Compare org.eclipse.bpmn2.impl.Bpmn2PackageImpl from me and Ed's one
-** also yours it's not using Class#getResource() (instead because of Reflection.register works?)
-** Also this is based on the GWT plugin mode - not really long term support
