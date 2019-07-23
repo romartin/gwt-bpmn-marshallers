@@ -13,7 +13,11 @@ public class XmlExtendedMetadata extends BasicExtendedMetaData {
 
     private static void initXmiToXmlNamespaceMap() {
         xmiToXmlNamespaceMap = new HashMap(6);
-        String[] namespaces = new String[]{"http://www.omg.org/spec/BPMN/20100524/MODEL-XMI", "http://www.omg.org/spec/BPMN/20100524/DI-XMI", "http://www.omg.org/spec/DD/20100524/DI-XMI", "http://www.omg.org/spec/DD/20100524/DC-XMI"};
+        String[] namespaces = new String[] {
+                "http://www.omg.org/spec/BPMN/20100524/MODEL-XMI",
+                "http://www.omg.org/spec/BPMN/20100524/DI-XMI", "http://www.omg.org/spec/DD/20100524/DI-XMI",
+                "http://www.omg.org/spec/DD/20100524/DC-XMI"
+        };
         String[] var4 = namespaces;
         int var3 = namespaces.length;
 

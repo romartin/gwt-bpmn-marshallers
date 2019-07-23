@@ -25,7 +25,7 @@ public class Bpmn2Marshalling {
 
     public static String marshall(final DocumentRoot document) {
         Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
-        bpmn2Resource.getContents().add(document);
+        bpmn2Resource.getContents().add(document.getDefinitions());
         String raw = null;
         try {
             raw = bpmn2Resource.toBPMN2();

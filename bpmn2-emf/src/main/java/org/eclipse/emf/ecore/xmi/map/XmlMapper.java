@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.XMLParser;
-import org.eclipse.bpmn2.DocumentRoot;
 import org.eclipse.emf.common.util.Callback;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -44,8 +43,6 @@ public class XmlMapper extends AbstractMapper {
                         Map<?, ?> options) {
 
         XMLResource xmlResource = (XMLResource) resource;
-
-        DocumentRoot root = (DocumentRoot) xmlResource.getContents().get(0);
 
         Document document = XMLParser.createDocument();
 

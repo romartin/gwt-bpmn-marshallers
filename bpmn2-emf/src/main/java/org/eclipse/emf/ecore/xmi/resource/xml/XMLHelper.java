@@ -817,6 +817,11 @@ public class XMLHelper
       }
     }
 
+    if (null == objectURI) {
+      // TODO: Here goes the resource uri (the process name. eg: test.process1)
+      return "";
+    }
+
     objectURI = deresolve(objectURI);
 
     return objectURI.toString();
@@ -824,7 +829,8 @@ public class XMLHelper
 
   protected URI getHREF(Resource otherResource, EObject obj)
   {
-    return otherResource.getURI().appendFragment(getURIFragment(otherResource, obj));
+    return null != otherResource.getURI() ?
+            otherResource.getURI().appendFragment(getURIFragment(otherResource, obj)) : null;
   }
 
   public URI deresolve(URI uri)

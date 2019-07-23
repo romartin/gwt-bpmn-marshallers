@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecore.xmi.util;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Attr;
 import com.google.gwt.xml.client.CDATASection;
 import com.google.gwt.xml.client.Comment;
@@ -22,12 +23,26 @@ public class GwtDOMHandler {
     // TODO: Check
     public Element createElementNS(final String namespaceURI,
                                    final String qualifiedName) {
-        return document.createElement(qualifiedName);
+        GWT.log("createElementNS(" + namespaceURI + ", " + qualifiedName + ")");
+        String tagName = qualifiedName;
+        int i = qualifiedName.lastIndexOf(':');
+        if (i > -1) {
+            String[] qn = new String[] {qualifiedName.substring(0, i), qualifiedName.substring(i + 1)};
+            i = qn[0].lastIndexOf(':');
+            if (i > -1) {
+                // TODO: Logger
+                GWT.log("[ERROR]: Fixing NS '" + qualifiedName + "'");
+                qn[0] = qn[0].substring(i + 1);
+            }
+            tagName = qn[0] + ":" + qn[1];
+        }
+        return document.createElement(tagName);
     }
 
     // TODO: Check
     public Attr createAttributeNS(final String namespaceURI,
                                   final String qualifiedName) {
+        GWT.log("createAttributeNS(" + namespaceURI + ", " + qualifiedName + ")");
         return new RuntimeAttr(namespaceURI, qualifiedName);
 
     }
@@ -40,6 +55,7 @@ public class GwtDOMHandler {
                                final String namespaceURI,
                                final String qualifiedName,
                                final String value) {
+        GWT.log("setAttributeNS(" + namespaceURI + ", " + qualifiedName + ", " + value + ")");
         Element e = (Element) node;
         // String fqn = namespaceURI + ":" + qualifiedName;
         String fqn = qualifiedName;
@@ -78,6 +94,7 @@ public class GwtDOMHandler {
     }
 
     public Node appendChild(final Node newChild) {
+        GWT.log("appendChild(" + newChild.getNodeValue() + ")");
         return document.appendChild(newChild);
     }
 
