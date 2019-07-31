@@ -40,19 +40,13 @@ HowTo
 -----
 1.- mvn clean
 2.- remove generated packages
-    - org.eclipse.bpmn2
-    - org.eclipse.dd
-    - org.jboss.drools
+    - org.eclipse.bpmn2.*
+    - org.eclipse.dd.*
+    - org.jboss.drools.*
+    - bpsim.*
 3.- Generate models
     - BPMN20.genmodel
     - bpmn2emfextmodel.genmodel
     - bpsim.genmodel
     - bpmn2color.genmodel ??
 4.- Remove generated gwt.xml module files
-5.- Fixes?
-    - org.eclipse.bpmn2.impl.Bpmn2PackageImpl
-        // TODO: NEW
-        theBpmn2Package.getEClassifiers().addAll(DroolsPackage.eINSTANCE.getEClassifiers());
-        theBpmn2Package.getEAnnotations().addAll(DroolsPackage.eINSTANCE.getEAnnotations());
-        theBpmn2Package.fixEClassifiers();
-    

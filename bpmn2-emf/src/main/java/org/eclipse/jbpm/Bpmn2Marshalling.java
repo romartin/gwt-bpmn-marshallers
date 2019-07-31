@@ -7,6 +7,8 @@ import com.google.gwt.core.client.GWT;
 import org.eclipse.bpmn2.DocumentRoot;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.Process;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 
 import static java.util.stream.Collectors.toList;
 
@@ -19,7 +21,17 @@ public class Bpmn2Marshalling {
         } catch (IOException e) {
             logError(e);
         }
-        DocumentRoot docRoot = (DocumentRoot) bpmn2Resource.getContents().get(0);
+        return getDocumentRoot(bpmn2Resource);
+    }
+
+    private static DocumentRoot getDocumentRoot(final XMLResource resource) {
+        DocumentRoot docRoot = (DocumentRoot) resource.getContents().get(0);
+        Process process = getProcess(docRoot);
+        GWT.log("Process id = " + process.getId());
+        GWT.log("Process name = " + process.getName());
+        FeatureMap anyAttribute = process.getAnyAttribute();
+        GWT.log("Attributes size = " + anyAttribute.size());
+        anyAttribute.forEach(e -> GWT.log("[" + e.getEStructuralFeature().getName() + "=" + e.getValue() + "]"));
         return docRoot;
     }
 

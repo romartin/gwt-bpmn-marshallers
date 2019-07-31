@@ -1,11 +1,16 @@
 package org.eclipse.jbpm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 
 public class XmlExtendedMetadata extends BasicExtendedMetaData {
@@ -15,7 +20,8 @@ public class XmlExtendedMetadata extends BasicExtendedMetaData {
         xmiToXmlNamespaceMap = new HashMap(6);
         String[] namespaces = new String[] {
                 "http://www.omg.org/spec/BPMN/20100524/MODEL-XMI",
-                "http://www.omg.org/spec/BPMN/20100524/DI-XMI", "http://www.omg.org/spec/DD/20100524/DI-XMI",
+                "http://www.omg.org/spec/BPMN/20100524/DI-XMI",
+                "http://www.omg.org/spec/DD/20100524/DI-XMI",
                 "http://www.omg.org/spec/DD/20100524/DC-XMI"
         };
         String[] var4 = namespaces;
@@ -26,6 +32,44 @@ public class XmlExtendedMetadata extends BasicExtendedMetaData {
             xmiToXmlNamespaceMap.put(curNs, xmiToXsdNamespaceUri(curNs));
         }
 
+    }
+
+    /*
+        TODO: Override all parent calls to split("\\w"") -> not splitting properly on client side
+     */
+    @Override
+    protected List<String> basicGetWildcards(EStructuralFeature eStructuralFeature) {
+        EAnnotation eAnnotation = getAnnotation(eStructuralFeature, false);
+        if (eAnnotation != null)
+        {
+            String wildcards = eAnnotation.getDetails().get("wildcards");
+            if (wildcards != null)
+            {
+                List<String> result = new ArrayList<String>();
+                for (String wildcard : wildcards.split(","))
+                {
+                    if (wildcard.equals("##other"))
+                    {
+                        result.add("!##" + getNamespace(eStructuralFeature.getEContainingClass().getEPackage()));
+                    }
+                    else if (wildcard.equals("##local"))
+                    {
+                        result.add(null);
+                    }
+                    else if (wildcard.equals("##targetNamespace"))
+                    {
+                        result.add(getNamespace(eStructuralFeature.getEContainingClass().getEPackage()));
+                    }
+                    else
+                    {
+                        result.add(wildcard);
+                    }
+                }
+                return result;
+            }
+        }
+
+        return Collections.emptyList();
     }
 
     public XmlExtendedMetadata() {

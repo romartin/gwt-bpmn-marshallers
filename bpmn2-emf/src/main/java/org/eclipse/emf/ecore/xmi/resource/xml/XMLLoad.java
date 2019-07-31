@@ -31,6 +31,7 @@ import com.google.gwt.xml.client.ProcessingInstruction;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.util.GwtDOMHandler;
 
 //import javax.xml.parsers.ParserConfigurationException;
 //import javax.xml.parsers.SAXParser;
@@ -450,7 +451,7 @@ public class XMLLoad
 
     public String getValue(String uri, String localName)
     {
-      Node node = attributes.getNamedItem(/*fixme ns uri, */localName);
+      Node node = GwtDOMHandler.getNamedItem(attributes, uri, localName);
       return (node != null) ? node.getNodeValue() : null;
     }
 
@@ -473,7 +474,7 @@ public class XMLLoad
 
     public int getIndex(String uri, String localPart)
     {
-      Node node = attributes.getNamedItem(/* fixme ns uri, */localPart);
+      Node node = GwtDOMHandler.getNamedItem(attributes, uri, localPart);
       if (node != null)
       {
         for (int i = 0; i < attributes.getLength(); i++)

@@ -18,17 +18,25 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.resource.xml.XMLSave;
 import org.eclipse.emf.ecore.xmi.util.ElementHandler;
+import org.jboss.drools.DroolsPackage;
 
 public class Bpmn2Resource extends XMLResourceImpl {
     static {
+        DroolsPackage drools = DroolsPackage.eINSTANCE;
+        Bpmn2Package bpmn = Bpmn2Package.eINSTANCE;
+
         EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
-        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", Bpmn2Package.eINSTANCE);
-//                packageRegistry.put("http://www.jboss.org/drools", DroolsPackage.eINSTANCE);
+        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", bpmn);
+        packageRegistry.put("http://www.jboss.org/drools", drools);
     }
+
+    public HashMap xmlNameToFeatureMap = new HashMap();
 
     public void load(Node node) throws IOException {
         HashMap<Object, Object> options = new HashMap<>();
-//                options.put(XMLResource.OPTION_DOM_USE_NAMESPACES_IN_SCOPE, true);
+        options.put(XMLResource.OPTION_DOM_USE_NAMESPACES_IN_SCOPE, true);
+        options.put(XMLResource.OPTION_USE_XML_NAME_TO_FEATURE_MAP, xmlNameToFeatureMap);
+        options.put(XMLResource.OPTION_USE_ENCODED_ATTRIBUTE_STYLE, true);
         options.put(XMLResource.OPTION_EXTENDED_META_DATA, new XmlExtendedMetadata());
         options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
         options.put(XMLResource.OPTION_DISABLE_NOTIFY, true);

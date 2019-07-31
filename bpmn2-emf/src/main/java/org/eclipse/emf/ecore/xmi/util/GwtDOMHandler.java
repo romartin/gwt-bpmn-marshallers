@@ -16,6 +16,13 @@ public class GwtDOMHandler {
 
     private final Document document;
 
+    public static Node getNamedItem(NamedNodeMap map,
+                                    String uri,
+                                    String localName) {
+        // TODO: Check
+        return map.getNamedItem(localName);
+    }
+
     public GwtDOMHandler(final Document document) {
         this.document = document;
     }
