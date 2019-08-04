@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import org.eclipse.bpmn2.Definitions;
 import org.eclipse.bpmn2.DocumentRoot;
 import org.eclipse.bpmn2.FlowElement;
 import org.eclipse.bpmn2.Process;
@@ -24,6 +25,22 @@ public class Bpmn2Marshalling {
         return getDocumentRoot(bpmn2Resource);
     }
 
+    public static String marshall(final DocumentRoot document) {
+        return marshall(document.getDefinitions());
+    }
+
+    public static String marshall(final Definitions definitions) {
+        Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
+        bpmn2Resource.getContents().add(definitions);
+        String raw = null;
+        try {
+            raw = bpmn2Resource.toBPMN2();
+        } catch (IOException e) {
+            logError(e);
+        }
+        return raw;
+    }
+
     private static DocumentRoot getDocumentRoot(final XMLResource resource) {
         DocumentRoot docRoot = (DocumentRoot) resource.getContents().get(0);
         Process process = getProcess(docRoot);
@@ -33,18 +50,6 @@ public class Bpmn2Marshalling {
         GWT.log("Attributes size = " + anyAttribute.size());
         anyAttribute.forEach(e -> GWT.log("[" + e.getEStructuralFeature().getName() + "=" + e.getValue() + "]"));
         return docRoot;
-    }
-
-    public static String marshall(final DocumentRoot document) {
-        Bpmn2Resource bpmn2Resource = new Bpmn2Resource();
-        bpmn2Resource.getContents().add(document.getDefinitions());
-        String raw = null;
-        try {
-            raw = bpmn2Resource.toBPMN2();
-        } catch (IOException e) {
-            logError(e);
-        }
-        return raw;
     }
 
     public static Process getProcess(DocumentRoot docRoot) {

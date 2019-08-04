@@ -47,6 +47,6 @@ HowTo
 3.- Generate models
     - BPMN20.genmodel
     - bpmn2emfextmodel.genmodel
-    - bpsim.genmodel
-    - bpmn2color.genmodel ??
-4.- Remove generated gwt.xml module files
+    - bpsim.genmodel // TODO
+    - bpmn2color.genmodel // TODO
+4.- Remove generated gwt.xml module files (OPTIONAL)
