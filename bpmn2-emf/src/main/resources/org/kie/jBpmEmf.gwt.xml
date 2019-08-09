@@ -4,6 +4,6 @@
 
   <inherits name="org.eclipse.jBpmEmfBpmn2"/>
   <inherits name="org.jboss.drools.jBpmEmfDrools"/>
-  <!--<inherits name="jBpmEmfBpsim"/>-->
+  <inherits name="jBpmEmfBpsim"/>
 
 </module>

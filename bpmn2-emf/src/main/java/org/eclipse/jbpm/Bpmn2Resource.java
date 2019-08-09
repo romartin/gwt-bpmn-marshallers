@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import bpsim.BpsimPackage;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
@@ -23,11 +24,13 @@ import org.jboss.drools.DroolsPackage;
 public class Bpmn2Resource extends XMLResourceImpl {
     static {
         DroolsPackage drools = DroolsPackage.eINSTANCE;
+        BpsimPackage bpsim = BpsimPackage.eINSTANCE;
         Bpmn2Package bpmn = Bpmn2Package.eINSTANCE;
 
         EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
         packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", bpmn);
         packageRegistry.put("http://www.jboss.org/drools", drools);
+        packageRegistry.put("http://www.bpsim.org/schemas/1.0", bpsim);
     }
 
     public HashMap xmlNameToFeatureMap = new HashMap();
