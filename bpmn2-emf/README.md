@@ -34,19 +34,21 @@ TODO
         * Refactor code impls  
 
 * Instead of copying generated sources, use some mvn plugin to generate classes from ecore etc
+* Reduce number of calls to the PackagesImpl#init methods (eg: BpmnDiPackageImpl.initializePackageContents)
 * Check // TODO (kogito) - Roger
 
 HowTo
 -----
 1.- mvn clean
 2.- remove generated packages
-    - org.eclipse.bpmn2.*
-    - org.eclipse.dd.*
-    - org.jboss.drools.*
-    - bpsim.*
+    - org.eclipse.bpmn2.* (BPMN20.genmodel)
+    - org.eclipse.dd.* (BPMN20.genmodel)
+    - org.jboss.drools.* (bpmn2emfextmodel.genmodel)
+    - bpsim.* (bpsim.genmodel)
+    - org.omg.spec.bpmn.non.normative.color.* (bpmn2color.genmodel)
 3.- Generate models
     - BPMN20.genmodel
     - bpmn2emfextmodel.genmodel
-    - bpsim.genmodel // TODO
-    - bpmn2color.genmodel // TODO
+    - bpsim.genmodel
+    - bpmn2color.genmodel
 4.- Remove generated gwt.xml module files (OPTIONAL)

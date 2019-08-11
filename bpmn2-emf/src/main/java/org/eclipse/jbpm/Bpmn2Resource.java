@@ -12,6 +12,9 @@ import com.google.gwt.xml.client.Document;
 import com.google.gwt.xml.client.Node;
 import com.google.gwt.xml.client.XMLParser;
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.di.BpmnDiPackage;
+import org.eclipse.dd.dc.DcPackage;
+import org.eclipse.dd.di.DiPackage;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -20,15 +23,23 @@ import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl;
 import org.eclipse.emf.ecore.xmi.resource.xml.XMLSave;
 import org.eclipse.emf.ecore.xmi.util.ElementHandler;
 import org.jboss.drools.DroolsPackage;
+import org.omg.spec.bpmn.non.normative.color.impl.ColorPackageImpl;
 
 public class Bpmn2Resource extends XMLResourceImpl {
     static {
         DroolsPackage drools = DroolsPackage.eINSTANCE;
         BpsimPackage bpsim = BpsimPackage.eINSTANCE;
+        BpmnDiPackage bpmndi = BpmnDiPackage.eINSTANCE;
+        DiPackage di = DiPackage.eINSTANCE;
+        DcPackage dc = DcPackage.eINSTANCE;
+        ColorPackageImpl.init();
         Bpmn2Package bpmn = Bpmn2Package.eINSTANCE;
 
         EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
         packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/MODEL", bpmn);
+        packageRegistry.put("http://www.omg.org/spec/DD/20100524/DI", di);
+        packageRegistry.put("http://www.omg.org/spec/DD/20100524/DC", dc);
+        packageRegistry.put("http://www.omg.org/spec/BPMN/20100524/DI", bpmndi);
         packageRegistry.put("http://www.jboss.org/drools", drools);
         packageRegistry.put("http://www.bpsim.org/schemas/1.0", bpsim);
     }

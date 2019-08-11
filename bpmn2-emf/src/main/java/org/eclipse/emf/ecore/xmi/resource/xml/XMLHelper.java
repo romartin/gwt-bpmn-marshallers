@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.EMap;
@@ -817,8 +818,12 @@ public class XMLHelper
       }
     }
 
+
     if (null == objectURI) {
-      // TODO: Here goes the resource uri (the process name. eg: test.process1)
+      // TODO: Kogito - Hmmm
+      if (o instanceof BaseElement) {
+        return ((BaseElement) o).getId();
+      }
       return "";
     }
 

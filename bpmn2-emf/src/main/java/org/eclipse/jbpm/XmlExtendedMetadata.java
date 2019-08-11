@@ -6,8 +6,9 @@ import java.util.Map;
 import org.eclipse.bpmn2.Bpmn2Package;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
 
-public class XmlExtendedMetadata extends GwtExtendedMetaData {
+public class XmlExtendedMetadata extends BasicExtendedMetaData {
     private static Map<String, String> xmiToXmlNamespaceMap;
 
     private static void initXmiToXmlNamespaceMap() {
