@@ -110,45 +110,6 @@ public class XMLHelper
     int getColumnNumber();
   }
 
-
-  public static String saveString(Map<?, ?> options, List<? extends EObject> contents, String encoding, XMLHelper helper) throws Exception
-  {
-    // TODO
-    /*if (helper == null)
-    {
-      helper = new XMLHelper();
-    }
-    if (!options.containsKey(XMLResource.OPTION_DECLARE_XML))
-    {
-      Map<Object, Object> modifiedOptions = new HashMap<Object, Object>(options);
-      modifiedOptions.put(XMLResource.OPTION_DECLARE_XML, Boolean.FALSE);
-      options = modifiedOptions;
-    }
-    XMLSaveImpl save = new XMISaveImpl(options, helper, encoding);
-    
-    if (Boolean.TRUE.equals(options.get(XMLResource.OPTION_DEFER_IDREF_RESOLUTION)))
-    {
-      ((XMLHelper)helper).checkForDuplicates = true;
-    }
-    
-    ((XMLHelper)helper).processDanglingHREF = (String)options.get(XMLResource.OPTION_PROCESS_DANGLING_HREF);
-    save.traverse(contents);
-    if (save.useCache)
-    {
-      if (save.doc != null)
-      {
-        ConfigurationCache.INSTANCE.releasePrinter(save.doc);
-      }
-      if (save.escape != null)
-      {
-        ConfigurationCache.INSTANCE.releaseEscape(save.escape);
-      } 
-    }
-    char[] chars = save.toChar();
-    return new String(chars);*/
-    return null;
-  }
-
   public XMLHelper()
   {
     super();
